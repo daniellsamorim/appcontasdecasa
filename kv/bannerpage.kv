@@ -1,0 +1,32 @@
+<BannerPage>:
+    MDBanner:
+        id: banner
+        type: "two-line"
+        text:["Titulo tela escondida", "HOHOHO! feliz Natal!!"]
+        font_size:13
+        # The widget that is under the banner.
+        # It will be shifted down to the height of the banner.
+        over_widget: screen
+        vertical_pad: toolbar.height
+
+    MDTopAppBar:
+        id: toolbar
+        title: "Titulo do banner"
+        elevation: 4
+        pos_hint: {'top': 1}
+
+    MDBoxLayout:
+        id: screen
+        orientation: "vertical"
+        size_hint_y: None
+        height: Window.height - toolbar.height
+
+
+        OneLineListItem:
+            text: "Mensagem de feliz natal"
+            on_release: banner.show()
+            #on_press: root.add_widget(banner)
+
+        Widget:
+
+

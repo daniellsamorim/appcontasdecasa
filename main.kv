@@ -1,0 +1,36 @@
+#:include kv/loginpage.kv
+#:include kv/usernamepage.kv
+#:include kv/homepage.kv
+#:include kv/bannerpage.kv
+#:include kv/pagarpage.kv
+#:include kv/aluguelpage.kv
+#:include kv/scrollpage.kv
+#:import utils kivy.utils
+#:import Factory kivy.factory
+MDFloatLayout:
+
+    ScreenManager:
+        pos_hint: {"right":1, "top":1}
+        size_hint: 1, 1
+        id:screen_manager
+        LoginPage:
+            name: "loginpage"
+            id: loginpage
+        UsernamePage:
+            name: "usernamepage"
+            id: usernamepage
+        HomePage:
+            name: "homepage"
+            id: homepage
+        BannerPage:
+            name: "bannerpage"
+            id: bannerpage
+        PagarPage:
+            name: "pagarpage"
+            id: pagarpage
+        AluguelPage:
+            name: "aluguelpage"
+            id: aluguelpage
+        ScrollPage:
+            name: "scrollpage"
+            id: scrollpage

@@ -1,0 +1,179 @@
+<PagarPage>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        #TITULO TELA DE PAGAMENTOS
+        MDLabel:
+            pos_hint: {"right": 1, "top": 0.98}
+            size_hint: 1, 0.05
+            text: "[color=#00CFDB]Pagamentos:[/color] User"
+            markup: True
+            halign: 'center'
+            valign: 'middle'
+            color: (1,1,0,1)
+            id: label_aviso_pago
+
+        MDLabel:
+            pos_hint: {"right": 1, "top": 0.95}
+            size_hint: 1, 0.05
+            text: "Registrar em mes/ano"
+            font_style: "Overline"
+            markup: True
+            halign: 'center'
+            valign: 'middle'
+            id: lbl_mes_referencia
+
+        #CAMPO DESCRICAO
+        GridLayout:
+            rows: 1
+            pos_hint: {"right": 0.9, "top": 0.90}
+            size_hint: 0.8, 0.075
+            MDTextField:
+                hint_text: "Descrição"
+                mode: "round"
+                max_text_length: 15
+                helper_text: "Descreva o pagamento"
+                id:input_desc
+
+
+        #CAMPO VALOR
+        GridLayout:
+            rows: 1
+            pos_hint: {"right": 0.9, "top": 0.80}
+            size_hint: 0.8, 0.075
+            MDTextField:
+                hint_text: "Valor"
+                mode: "round"
+                #max_text_length: 10
+                helper_text: "Valor pago"
+                id:input_valor
+
+        #CAMPO DE DATA
+        GridLayout:
+            rows: 1
+            pos_hint: {"right": 0.9, "top": 0.70}
+            size_hint: 0.8, 0.075
+            MDTextField:
+                hint_text: "Data"
+                mode: "round"
+                #max_text_length: 15
+                helper_text: "Data do registro"
+                id:input_data
+
+        #PAINEL CADASTRAR DESPESAS
+        MDFloatLayout:
+            pos_hint: {"right": 0.9, "top": 0.6}
+            size_hint: 0.8, 0.17
+
+            #BOTAO CADASTRAR DESPESA
+            MDRaisedButton:
+                text: "Cadastrar despesa"
+                on_release: app.cadastrar_pagamento("pagamento")
+                pos_hint: {"right": 1, "top": 0.95}
+                size_hint: 1, 0.15
+            #BOTAO DEVO A
+            MDRaisedButton:
+                text: "Devo a User 00"
+                on_release: app.cadastrar_pagamento("devedor")
+                pos_hint: {"right": 1, "top": 0.45}
+                size_hint: 1, 0.15
+                id: btn_user_credor
+
+        #TITULO DE CONTAS FIXAS
+        MDLabelButton:
+            text: "[color=#00CFDB]Contas fixas:[/color]"
+            markup: True
+            pos_hint: {"right": .9, "top": 0.45}
+            size_hint: 0.8, 0.1
+            halign: 'center'
+            valign: 'middle'
+            id: label_aviso
+            on_release: app.ver_aluguel()
+
+        #PAINEL CONTAS FIXAS
+        MDFloatLayout:
+            pos_hint: {"right": 0.97, "top": 0.37}
+            size_hint: 0.94, 0.25
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex("#006d7e")
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 30, 00, 30, 00
+
+            #CAMPO DE ALUGUEL
+            GridLayout:
+                rows: 1
+                pos_hint: {"right": 0.9, "top": 0.93}
+                size_hint: 0.8, 0.05
+                MDLabel:
+                    text: "Aluguel: R$0.00"
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    id: lbl_alg_status
+
+                MDRectangleFlatButton:
+                    id: btn_alg_status
+                    size_hint: 0.7, 0.04
+                    text: "Pagar"
+                    on_release: app.pagar_aluguel("alg", lbl_alg_status.text)
+                    disabled: False
+                    id: btn_alg_status
+
+
+            #CAMPO DE COND
+            GridLayout:
+                rows: 1
+                pos_hint: {"right": 0.9, "top": 0.62}
+                size_hint: 0.8, 0.05
+                MDLabel:
+                    text: "Cond.: R$0.00"
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    id: lbl_cond_status
+
+                MDRectangleFlatButton:
+                    id: btn_cond_status
+                    size_hint: 0.7, 0.04
+                    text: "Pagar"
+                    disabled: False
+                    on_release: app.pagar_aluguel("cond", lbl_cond_status.text)
+                    id: btn_cond_status
+
+            #CAMPO DE AGUA
+            GridLayout:
+                rows: 1
+                pos_hint: {"right": 0.9, "top": 0.30}
+                size_hint: 0.8, 0.05
+                MDLabel:
+                    text: "Agua: R$0.00"
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    id: lbl_agua_status
+
+                MDRectangleFlatButton:
+                    id: btn_agua_status
+                    size_hint: 0.7, 0.04
+                    text: "Pagar"
+                    disabled: False
+                    on_release: app.pagar_aluguel("agua", lbl_agua_status.text)
+                    id: btn_agua_status
+
+
+
+
+
+        #BOTAO CANCELAR
+        MDRaisedButton:
+            text: "Cancelar"
+            on_release: app.mudar_tela("homepage")
+            pos_hint: {"center_x": .5, "center_y": .05}
+            size_hint: 1, 0.10
+
