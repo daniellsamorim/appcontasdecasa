@@ -18,16 +18,20 @@ class PagarPage(Screen):
 class AluguelPage(Screen):
     pass
 
-class BannerPage(Screen):
-    pass
-
 class ScrollPage(Screen):
     pass
 
-class Content(BoxLayout):
+class ConfigPage(Screen):
+    pass
 
-    def __init__(self, **kwargs):
-        super(Content, self).__init__(**kwargs)
-        self.city = StringProperty()
-        self.street = StringProperty()
+class ExcluirConta(Screen):
+    pass
 
+class RedefinirSenha(Screen):
+    pass
+
+class FotoperfilPage(Screen):
+    pass
+
+class RelatorioPage(Screen):
+    pass

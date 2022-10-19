@@ -1,0 +1,64 @@
+<ConfigPage>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: "icones/bg1.png"
+
+        #TITULO DA PÁGINA DE CONFIGURAÇÕES
+        MDLabel:
+            text: "[color=#00CFDB]Configurações[/color]"
+            markup: True #True para ativar a cor acima
+            bold: True
+            pos_hint: {"right": 0.9, "top": 0.90}
+            size_hint: 0.8, 0.08
+            halign: 'center'
+            valign: 'middle'
+            #id: label_conf
+
+        #CADASTRAR USUÁRIOS
+        MDRectangleFlatIconButton:
+            pos_hint: {"right": 0.9, "top": 0.8}
+            size_hint: 0.8, 0.10
+            icon: "badge-account-horizontal"
+            line_color: (1, 0, 0, 1)
+            text: "Cadastrar usuários"
+            on_release: app.pegar_nomes_usuarios()
+
+        #ESCOLHER FOTO PERFIL
+        MDRectangleFlatIconButton:
+            pos_hint: {"right": 0.9, "top": 0.65}
+            size_hint: 0.8, 0.10
+            icon: "account-box-multiple"
+            line_color: (1, 0, 0, 1)
+            text: "Escolher foto perfil"
+            on_release: app.mudar_tela("fotoperfilpage")
+
+        #FAZER LOGOFF
+        MDRectangleFlatIconButton:
+            pos_hint: {"right": 0.9, "top": 0.5}
+            size_hint: 0.8, 0.10
+            icon: "logout"
+            line_color: (1, 0, 0, 1)
+            text: "Fazer logoff"
+            on_release: app.show_alert_dialog()
+
+        #EXCLUIR CONTA
+        MDRectangleFlatIconButton:
+            pos_hint: {"right": 0.9, "top": 0.35}
+            size_hint: 0.8, 0.10
+            icon: "account-cancel"
+            line_color: (1, 0, 0, 1)
+            text: "Excluir conta"
+            on_release: app.mudar_tela("excluirconta")
+
+
+
+
+    #BOTAO SAIR
+    MDRaisedButton:
+        text: "Sair"
+        on_release: app.mudar_tela("homepage")
+        pos_hint: {"center_x": .5, "center_y": .05}
+        size_hint: 1, 0.10

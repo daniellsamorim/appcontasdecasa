@@ -1,0 +1,74 @@
+<fotoperfilpage>:
+
+    MDFloatLayout:
+        canvas:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        #TITULO DA PÁGINA DE CONFIGURAÇÕES
+        MDLabel:
+            text: "[color=#00CFDB]Foto perfil[/color]"
+            markup: True #True para ativar a cor acima
+            bold: True
+            pos_hint: {"right": 0.9, "top": 0.90}
+            size_hint: 0.8, 0.08
+            halign: 'center'
+            valign: 'middle'
+            #id: label_conf
+
+        MDFloatLayout:
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex("#006d7e")
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            pos_hint: {"right": 1, "top": 0.8}
+            size_hint: 1, 0.3
+
+
+            FitImage:
+                pos_hint: {"center_x": 0.25, "center_y": 0.5}
+                size_hint_x: 0.40
+                size_hint_y: self.size_hint_x + 0.1
+                source: "fotos/user.jpg"
+                radius: 50, 50, 50, 50
+                id: foto_perfil_user1
+
+            FitImage:
+                pos_hint: {"center_x": 0.75, "center_y": 0.5}
+                size_hint_x: 0.40
+                size_hint_y: self.size_hint_x + 0.1
+                source: "fotos/user.jpg"
+                radius: 50, 50, 50, 50
+                id: foto_perfil_user2
+
+
+        MDTopAppBar:
+            pos_hint: {"top": 1}
+            title: ""
+            left_action_items: [["menu", lambda x: None]]
+            elevation: 3
+
+        MDFloatLayout:
+
+            MDRoundFlatIconButton:
+                text: "Foto user1"
+                icon: "folder"
+                pos_hint: {"center_x": .25, "center_y": .3}
+                on_release: app.file_manager_open("foto_user1")
+
+            MDRoundFlatIconButton:
+                text: "Foto user2"
+                icon: "folder"
+                pos_hint: {"center_x": .75, "center_y": .3}
+                on_release: app.file_manager_open("foto_user2")
+
+
+        #BOTAO CANCELAR
+        MDRaisedButton:
+            text: "Cancelar"
+            on_release: app.mudar_tela("configpage")
+            pos_hint: {"center_x": .5, "center_y": .05}
+            size_hint: 1, 0.10

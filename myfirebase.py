@@ -42,7 +42,7 @@ class MyFirebase():
 
             # link pro firebase é em texto, com id do usuario ja ira criar o primeiro id
             link = f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{local_id}.json?auth={id_token}"
-            info = f'{{"nome_mar": "Nome marido", "nome_esp": "Nome esposa", "foto_mar": "user1.png", "foto_esp": "user2.png"}}'
+            info = f'{{"nome_user1": "user1", "nome_user2": "user2", "foto_user1": "fotos//user1.png", "foto_user2": "fotos//user2.png"}}'
 
 
             # na criacao do BD use sempre o patch e passe o token do usuario

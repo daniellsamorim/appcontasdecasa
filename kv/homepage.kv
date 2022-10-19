@@ -1,78 +1,75 @@
 <HomePage>:
     FloatLayout:
-        canvas:
-            Rectangle:
-                size: self.size
-                pos: self.pos
-                source: "icones/bg1.png"
-
-        #IMAGE USER1
-        ImageButton:
-            pos_hint: {"right":0.4, "top": 0.8}
-            size_hint: 0.3, 0.3
-            source: "fotos/user1.png"
-            id: foto_perfil_user1
-            on_release:
-
-        #IMAGE USER2
-        ImageButton:
-            pos_hint: {"right":0.9, "top": 0.8}
-            size_hint: 0.3, 0.3
-            source: "fotos/user2.png"
-            id: foto_perfil_user2
-            on_release:
 
 
-        MDRectangleFlatButton:
-            text: "User 01"
-            pos_hint: {'center_x': .25, 'center_y': .45}
-            size_hint: .4, .05
-            on_release: app.abrir_lista("menu_user1")
-            id: acoes_user1
+        MDFloatLayout:
+            pos_hint: {"right": 1, "top": 0.85}
+            size_hint: 1, 0.13
 
-        MDRectangleFlatButton:
-            text: "User 02"
-            pos_hint: {'center_x': .75, 'center_y': .45}
-            size_hint: .4, .05
-            on_release: app.abrir_lista("menu_user2")
-            id: acoes_user2
-
-
-
-
-
-        GridLayout:
-            rows: 1
-            pos_hint: {"right": 0.9, "top": 0.33}
-            size_hint: 0.8, 0.04
-            canvas.before:
-
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
             MDLabel:
-                text: "Escolha mês e ano da consulta:"
-                text_size: self.size
+                pos_hint: {"right": 1, "top": .8}
+                size_hint: 1, 0.06
+                text: "Escolha mês e ano de referência:"
                 halign: 'center'
                 valign: 'middle'
                 id: home_aviso
 
-        MDRaisedButton:
-            text: "Mes"
-            on_release: app.abrir_lista("menu_mes")
-            pos_hint: {"center_x": .25, "center_y": .25}
-            size_hint: 0.3, 0.06
-            id: btn_mes
+            MDRaisedButton:
+                text: "Mes"
+                on_release: app.abrir_lista_opcoes("menu_mes")
+                pos_hint: {"center_x": .25, "center_y": .25}
+                size_hint: 0.4, 0.06
+                id: btn_mes
+
+            MDRaisedButton:
+                text: "Ano"
+                on_release: app.abrir_lista_opcoes("menu_ano")
+                pos_hint: {"center_x": .75, "center_y": .25}
+                size_hint: 0.4, 0.06
+                id: btn_ano
+
+        MDFloatLayout:
+            pos_hint: {"right": 1, "top": 0.78}
+            size_hint: 1, 0.5
+
+            FitImage:
+                pos_hint: {"right":0.45, "top": 0.7}
+                size_hint_x: 0.35
+                size_hint_y: self.size_hint_x
+                source: "fotos/user1.png"
+                radius: 50, 50, 50, 50
+                id: foto_perfil_user1
+
+            FitImage:
+                pos_hint: {"right":0.90, "top": 0.7}
+                size_hint_x: 0.35
+                size_hint_y: self.size_hint_x
+                source: "fotos/user2.png"
+                radius: 50, 50, 50, 50
+                id: foto_perfil_user2
+
+
+
+
+
+
+        MDRectangleFlatButton:
+            text: "User 01"
+            pos_hint: {'center_x': .25, 'center_y': .35}
+            size_hint: .4, .05
+            on_release: app.abrir_lista_opcoes("menu_user1")
+            id: acoes_user1
+
+        MDRectangleFlatButton:
+            text: "User 02"
+            pos_hint: {'center_x': .75, 'center_y': .35}
+            size_hint: .4, .05
+            on_release: app.abrir_lista_opcoes("menu_user2")
+            id: acoes_user2
+
 
         MDRaisedButton:
-            text: "Ano"
-            on_release: app.abrir_lista("menu_ano")
-            pos_hint: {"center_x": .75, "center_y": .25}
-            size_hint: 0.3, 0.06
-            id: btn_ano
-
-        MDRaisedButton:
-            text: "Abrir lista opções"
-            on_release: app.abrir_lista("menu_telas")
+            text: "Opções"
+            on_release: app.abrir_lista_opcoes("menu_telas")
             pos_hint: {"center_x": .5, "center_y": .05}
             size_hint: 1, 0.10

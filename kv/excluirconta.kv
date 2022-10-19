@@ -1,0 +1,60 @@
+<ExcluirConta>
+    FloatLayout:
+
+        canvas:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: "icones/bg1.png"
+
+        #TITULO PAGINA LOGIN
+        MDLabel:
+            #markup True permitiu editar o texto em 2 cores (duvida google markup)
+            text: "[color=#00CFDB]Excluir conta[/color]"
+            bold: True
+            markup: True
+            pos_hint: {"right": 0.9, "top": 0.90}
+            size_hint: 0.8, 0.2
+            halign: "center"
+
+        #CAMPOS DE INPUT DE EMAIL E SENHA
+        MDTextField:
+            hint_text: "Email"
+            helper_text: "Digite seu email"
+            helper_text_mode: "on_focus"
+            pos_hint: {"center_x": 0.5, "center_y": 0.70}
+            size_hint: 0.9, 0.10
+            id: email_excluir
+
+        MDTextField:
+            hint_text: "Senha"
+            helper_text: "Digite sua senha"
+            helper_text_mode: "on_focus"
+            password: True
+            pos_hint: {"center_x": 0.5, "center_y": 0.60}
+            size_hint: 0.9, 0.10
+            id: senha_excluir
+
+
+        MDLabel:
+            id: mensagem_excluir
+            text: "[color=#FF0000]Atenção![/color] Sua conta e todas suas informações serão excluidas."
+            text_size: self.size
+            markup: True
+            halign: 'center'
+            valign: 'middle'
+            pos_hint: {"right": 0.9, "top": 0.55}
+            size_hint: 0.8, 0.1
+
+        #BOTOES CANCELAR E EXCLUIR CONTA
+        MDRectangleFlatButton:
+            on_release: app.mudar_tela("configpage")
+            text: "Cancelar"
+            pos_hint: {"right": 0.45, "top": 0.4}
+            size_hint: 0.4, 0.05
+        MDRectangleFlatButton:
+            on_release: app.firebase.excluir_conta(email_excluir.text, senha_excluir.text)
+            text: "Excluir conta"
+            font_size: 13
+            pos_hint: {"right": 0.95, "top": 0.4}
+            size_hint: 0.4, 0.05

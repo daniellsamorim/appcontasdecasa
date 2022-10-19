@@ -35,7 +35,7 @@
         MDLabel:
             pos_hint: {"right": 0.9, "top": 0.60}
             size_hint: 0.8, 0.2
-            text: "Atenção, essa ação não poderá ser desfeita, defina seu nome e o nome com quem irá dividir suas contas. (use somente primeiro nome)"
+            text: "Preencha com os nomes de usuários que irão dividir as despesas!"
             font_style: "Overline"
             text_size: self.size
             halign: 'center'
@@ -53,7 +53,8 @@
 
 
         MDRaisedButton:
-            text: "Abrir lista opções"
-            on_release: app.abrir_lista("menu_telas")
+            text: "Sair"
+            on_release: app.mudar_tela("homepage")
             pos_hint: {"center_x": .5, "center_y": .05}
             size_hint: 1, 0.10
+

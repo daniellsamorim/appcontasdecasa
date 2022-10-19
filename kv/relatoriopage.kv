@@ -1,0 +1,129 @@
+<RelatorioPage>
+    FloatLayout:
+
+        #TITULO DA PAGINA
+        MDLabel:
+            text: "[color=#00CFDB]Relatório Pagamentos:[color=#00CFDB]"
+            markup: True
+            pos_hint: {"right": 1, "top": 1}
+            size_hint: 1, 0.07
+            halign: "center"
+            bold: True
+
+        #MES E ANO DE REFERENCIA
+        MDLabel:
+            pos_hint: {"right": 1, "top": 0.96}
+            size_hint: 1, 0.07
+            halign: "center"
+            font_style: "Caption"
+            bold: True
+            text: "[color=#00CFDB]Mês[/color]"
+            markup: True
+            id: relat_mes
+
+        #TITULO USER1
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.92}
+            size_hint: 0.7, 0.1
+            text: "Relatório de User 01"
+            color: (1,1,0,1)
+            font_size: 18
+            id: lbl_rel_user1
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.87}
+            size_hint: 0.7, 0.1
+            text: "Total pago: 0.00"
+            id: lbl_pago_user1
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.82}
+            size_hint: 0.7, 0.1
+            text: "Total devedor: 0.00"
+            id: lbl_dev_user1
+
+        #TITULO USER2
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.77}
+            size_hint: 0.7, 0.1
+            text: "Relatório de User 02"
+            color: (1,1,0,1)
+            font_size: 18
+            id: lbl_rel_user2
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.72}
+            size_hint: 0.7, 0.1
+            text: "Total pago: 0.00"
+            id: lbl_pago_user2
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.67}
+            size_hint: 0.7, 0.1
+            text: "Total devedor: 0.00"
+            id: lbl_dev_user2
+
+        #RESUMO
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.62}
+            size_hint: 0.7, 0.1
+            text: "Resumo:"
+            color: (1,1,0,1)
+            font_size: 18
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.57}
+            size_hint: 0.7, 0.1
+            text: "Despesas totais: 0.00"
+            id: lbl_ttl_desp
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.52}
+            size_hint: 0.7, 0.1
+            text: "Total pra cada: 0.00"
+            id: lbl_ttl_cada
+
+        #DIVISAO DESPESAS
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.47}
+            size_hint: 0.7, 0.1
+            text: "Divisão de despesas:"
+            color: (1,1,0,1)
+            font_size: 18
+
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.42}
+            size_hint: 0.7, 0.1
+            text: "Não á débtos!"
+            color: (1,0,0,1)
+            id: lbl_quemdeve
+
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.37}
+            size_hint: 0.7, 0.1
+            text: "RS:0.00"
+            id: lbl_vl_deve
+
+        #CONTAS INDIVIDUAIS
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.32}
+            size_hint: 0.7, 0.1
+            text: "Contas individuais:"
+            color: (1,1,0,1)
+            font_size: 18
+
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.27}
+            size_hint: 0.7, 0.1
+            text: "Não á débtos!"
+            color: (1,0,0,1)
+            id: lbl_quemdeveind
+
+        MDLabel:
+            pos_hint: {"right": 0.85, "top": 0.22}
+            size_hint: 0.7, 0.1
+            text: "RS:0.00"
+            id: lbl_vl_deveind
+
+
+
+    #BOTAO SAIR
+    MDRaisedButton:
+        text: "Sair"
+        on_release: app.mudar_tela("homepage")
+        pos_hint: {"center_x": .5, "center_y": .05}
+        size_hint: 1, 0.10
