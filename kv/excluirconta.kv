@@ -11,6 +11,7 @@
         MDLabel:
             #markup True permitiu editar o texto em 2 cores (duvida google markup)
             text: "[color=#00CFDB]Excluir conta[/color]"
+            text_style: "Button"
             bold: True
             markup: True
             pos_hint: {"right": 0.9, "top": 0.90}
@@ -55,6 +56,5 @@
         MDRectangleFlatButton:
             on_release: app.firebase.excluir_conta(email_excluir.text, senha_excluir.text)
             text: "Excluir conta"
-            font_size: 13
             pos_hint: {"right": 0.95, "top": 0.4}
             size_hint: 0.4, 0.05
