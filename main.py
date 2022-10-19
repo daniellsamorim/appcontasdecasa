@@ -539,32 +539,7 @@ class MainApp(MDApp):
         except:
             pass
 
-    def fazer_login_dialog(self):
-        self.dialog = ""
-        if not self.dialog:
-            self.dialog = MDDialog(
-                title="Entre com seus dados:",
-                type="custom",
-                content_cls=Content(),
-                buttons=[
-                    MDFlatButton(
-                        text="CANCEL",
-                        theme_text_color="Custom",
-                        text_color=self.theme_cls.primary_color,
-                        on_release=self.fechar_tela,
-                    ),
-                    MDFlatButton(
-                        text="OK",
-                        theme_text_color="Custom",
-                        text_color=self.theme_cls.primary_color,
-                        on_release=self.pegar_texto,
-                    ),
-                ],
-            )
-        self.dialog.open()
 
-    def pegar_texto(self, obj):
-        self.dialog.dismiss()
 
     def pegar_credor(self, user):
         user1 = self.pegar_texto(pagina="homepage", id_pagina="acoes_user1", parametro="text")
