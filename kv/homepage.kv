@@ -1,9 +1,15 @@
 <HomePage>:
     FloatLayout:
 
+        FitImage:
+            pos_hint: {"right": 1, "top": 1.08}
+            size_hint: 1, 0.3
+            source: "fotos/cc.png"
+
+
 
         MDFloatLayout:
-            pos_hint: {"right": 1, "top": 0.85}
+            pos_hint: {"right": 1, "top": 0.7}
             size_hint: 1, 0.13
 
             MDLabel:
@@ -29,7 +35,7 @@
                 id: btn_ano
 
         MDFloatLayout:
-            pos_hint: {"right": 1, "top": 0.78}
+            pos_hint: {"right": 1, "top": 0.7}
             size_hint: 1, 0.5
 
             FitImage:
@@ -55,14 +61,14 @@
 
         MDRectangleFlatButton:
             text: "User 01"
-            pos_hint: {'center_x': .25, 'center_y': .35}
+            pos_hint: {'center_x': .25, 'center_y': .32}
             size_hint: .4, .05
             on_release: app.abrir_lista_opcoes("menu_user1")
             id: acoes_user1
 
         MDRectangleFlatButton:
             text: "User 02"
-            pos_hint: {'center_x': .75, 'center_y': .35}
+            pos_hint: {'center_x': .75, 'center_y': .32}
             size_hint: .4, .05
             on_release: app.abrir_lista_opcoes("menu_user2")
             id: acoes_user2

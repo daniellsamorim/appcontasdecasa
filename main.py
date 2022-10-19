@@ -1,8 +1,9 @@
-from kivy.config import Config
+#set tamanho da tela
+# from kivy.config import Config
+# Config.set('graphics', 'width', '300')
+# Config.set('graphics', 'height', '600')
 
-Config.set('graphics', 'width', '300')
-Config.set('graphics', 'height', '600')
-# BIBLIOTECAS PARA ABRIR DOCUMENTOS
+# gerenciamento de pastas, arquivos e entradas do teclado
 from kivy.core.window import Window
 from kivymd.uix.filemanager import MDFileManager
 
@@ -80,20 +81,25 @@ class MainApp(MDApp):
             foto_user2 = requisicao_dic["foto_user2"].replace("+", "\\")
             nome_user1 = requisicao_dic["nome_user1"]
             nome_user2 = requisicao_dic["nome_user2"]
-            print("tttttttttt", foto_user2)
+            #SET FOTOS PERFIL HOMEPAGE
+            pagina = self.root.ids["homepage"]  # pega pagina pelo id
+            pagina.ids["foto_perfil_user1"].source = f'{foto_user1}'
+            pagina.ids["foto_perfil_user2"].source = f'{foto_user2}'
+            pagina.ids["acoes_user1"].text = nome_user1
+            pagina.ids["acoes_user2"].text = nome_user2
+            #SET FOTOS PERFILPAGE
+            pagina = self.root.ids["fotoperfilpage"]  # pega pagina pelo id
+            pagina.ids["foto_perfil_user1"].source = f'{foto_user1}'
+            pagina.ids["foto_perfil_user2"].source = f'{foto_user2}'
 
-            pagina_home = self.root.ids["homepage"]  # pega pagina pelo id
-            pagina_home.ids["foto_perfil_user1"].source = f'{foto_user1}'
-            pagina_home.ids["foto_perfil_user2"].source = f'{foto_user2}'
-            pagina_home.ids["acoes_user1"].text = nome_user1
-            pagina_home.ids["acoes_user2"].text = nome_user2
 
             # self.user1 = nome_user1
             # self.user2 = nome_user2
 
             self.mudar_tela("homepage")
         except Exception as ex:
-            print("info user exceptio: ", ex)
+            pass
+
 
     def pegar_nomes_usuarios(self):  # SETA OS CAMPOS DE USUÁRIOS
         # PEGA O NOME DOS USUÁRIOS CADASTRADOS
@@ -130,8 +136,8 @@ class MainApp(MDApp):
         menu_itens = []
         valor = None
         if menu == "menu_telas":
-            menu_itens = ["homepage", "configpage"]
-            function = self.mudar_tela
+            menu_itens = ["Configurações"]
+            function = self.acoes_menu
         elif menu == "menu_mes":
             mes_dic = self.pegar_mes()
             menu_itens = list(mes_dic[3].values())
@@ -169,6 +175,11 @@ class MainApp(MDApp):
         if acao == "Relatórios":
             user_2 = self.pegar_credor(self.user_atual)
             self.relatorio_pagamento(self.user_atual, user_2)
+
+    def acoes_menu(self, acao):
+        if acao == "Configurações":
+            self.mudar_tela("configpage")
+
 
     def pegar_credor(self, user_atual):
         user1 = self.pegar_texto(pagina="homepage", id_pagina="acoes_user1", parametro="text")
@@ -227,13 +238,10 @@ class MainApp(MDApp):
                     pagina_aluguel.ids["label_aluguel"].text = f"Aluguel a pagar: R$ {aluguel}"
                     pagina_aluguel.ids["label_cond"].text = f"Condominio a pagar: R$ {condominio}"
                     pagina_aluguel.ids["label_agua"].text = f"Água a pagar: R$ {agua}"
-
             else:
                 toast("Cadastre todos os valores!")
         except Exception as ex:
             toast("Cadastre todos os valores!")
-            print("excessao", ex)
-
         self.gravar_pag_aluguel(aluguel_vl, condominio_vl, agua_vl, aluguel, condominio, agua)
 
     def gravar_pag_aluguel(self, *args):
@@ -290,11 +298,6 @@ class MainApp(MDApp):
             # link pro firebase
             self.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text",
                                   dado=f"Cadastro mes de: {mes}")
-
-            self.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="hint_text", dado="0")
-            self.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="hint_text", dado="0")
-            self.enviar_parametro(pag="aluguelpage", id="preco_agua", par="hint_text", dado="0")
-
             self.mudar_tela("aluguelpage")
 
     def pegar_cod_user(self, usuario):
@@ -561,9 +564,6 @@ class MainApp(MDApp):
         self.dialog.open()
 
     def pegar_texto(self, obj):
-
-        print(self.dialog.content_cls.ids.city.text)
-        print(self.dialog.content_cls.ids.street.text)
         self.dialog.dismiss()
 
     def pegar_credor(self, user):
@@ -609,7 +609,7 @@ class MainApp(MDApp):
 
         mes_ref, ano_ref = self.mes_ano_solicitado()
 
-        self.enviar_parametro(pag="relatoriopage", id="relat_mes", par="text", dado=f"{mes_ref}/{ano_ref}")
+        self.enviar_parametro(pag="relatoriopage", id="relat_mes", par="text", dado=f"[color=#FF0000]{mes_ref}/{ano_ref}[/color]")
         self.enviar_parametro(pag="relatoriopage", id="lbl_rel_user1", par="text", dado=f"Relatório de {args[0]}:")
         self.enviar_parametro(pag="relatoriopage", id="lbl_rel_user2", par="text", dado=f"Relatório de {args[1]}:")
 
@@ -628,11 +628,11 @@ class MainApp(MDApp):
                               dado=f"Total pra cada: R${total_despesas / 2:,.2f}")
 
         # pegar pagamentos para user1
-        total3 = self.pegar_total_pago(args[0], mes_ref, ano_ref, "devedor")
+        total3 = self.pegar_total_pago(cod_userx, mes_ref, ano_ref, "devedor")
         self.enviar_parametro(pag="relatoriopage", id="lbl_dev_user1", par="text",
                               dado=f"Deve a {args[1]}: R${total3:,.2f}")
         # pegar pagamentos para user2
-        total4 = self.pegar_total_pago(args[1], mes_ref, ano_ref, "devedor")
+        total4 = self.pegar_total_pago(cod_usery, mes_ref, ano_ref, "devedor")
         self.enviar_parametro(pag="relatoriopage", id="lbl_dev_user2", par="text",
                               dado=f"Deve a {args[0]}: R${total4:,.2f}")
 
@@ -830,29 +830,26 @@ class MainApp(MDApp):
         self.exit_manager()
         if self.user_foto == "foto_user1":
             self.enviar_parametro(pag="homepage", id="foto_perfil_user1", par="source", dado=path)
+            self.enviar_parametro(pag="fotoperfilpage", id="foto_perfil_user1", par="source", dado=path)
         elif self.user_foto == "foto_user2":
             self.enviar_parametro(pag="homepage", id="foto_perfil_user2", par="source", dado=path)
+            self.enviar_parametro(pag="fotoperfilpage", id="foto_perfil_user2", par="source", dado=path)
         self.salvar_foto_perfil(self.user_foto, path)
         toast(path)
 
     def salvar_foto_perfil(self, user, caminho):
-        print(user, caminho)
         caminho_str = str(caminho).replace("\\", "+")
         link = f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}.json?auth={self.id_token}"
         info = f'{{"{user}": "{caminho_str}"}}'
-        requisicao1 = requests.patch(link, data=info)
-        requisicao = requisicao1.json()
-        print(requisicao)
+        requests.patch(link, data=info)
 
     def exit_manager(self, *args):
         '''Called when the user reaches the root of the directory tree.'''
-
         self.manager_open = False
         self.file_manager.close()
 
     def events(self, instance, keyboard, keycode, text, modifiers):
         '''Called when buttons are pressed on the mobile device.'''
-
         if keyboard in (1001, 27):
             if self.manager_open:
                 self.file_manager.back()

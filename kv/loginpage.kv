@@ -1,9 +1,10 @@
 <LoginPage>:
     MDFloatLayout:
-        canvas:
-            Rectangle:
-                size: self.size
-                pos: self.pos
+
+        FitImage:
+            pos_hint: {"right": 1, "top": 1.08}
+            size_hint: 1, 0.3
+            source: "fotos/cc.png"
 
         MDTextField:
             hint_text: "Email"

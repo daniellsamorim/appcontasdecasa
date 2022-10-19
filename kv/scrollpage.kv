@@ -197,8 +197,10 @@
             pos_hint: {"right": 1, "top": 0.09}
             size_hint: 1, 0.09
 
-            MDRaisedButton:
+            MDIconButton:
                 text:"Adicionar despesa"
+                icon: "plus-circle"
+                icon_size: "44sp"
                 pos_hint: {"right": 0.49, "top": 0.9}
                 size_hint: 0.49, 0.15
                 on_release: app.pagar_conta(app.user_atual)
