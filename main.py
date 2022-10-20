@@ -285,9 +285,9 @@ class MainApp(MDApp):
         except Exception as ex:
             self.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text",
                                   dado=f"Cadastro mes de: {self.mes_ref}")
-            self.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="hint_text", dado="0")
-            self.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="hint_text", dado="0")
-            self.enviar_parametro(pag="aluguelpage", id="preco_agua", par="hint_text", dado="0")
+            self.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="hint_text", dado="Aluguel")
+            self.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="hint_text", dado="Condominio")
+            self.enviar_parametro(pag="aluguelpage", id="preco_agua", par="hint_text", dado="Agua")
 
             self.mudar_tela("aluguelpage")
 
