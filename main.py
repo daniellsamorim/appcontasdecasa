@@ -290,7 +290,7 @@ class MainApp(MDApp):
         #PEGAR DATA ATUAL
         data_now = self.pegar_mes()
         # RESET CAMPOS DE PAGAMENTOS
-        self.reset_campos_pagamento()
+        ZerarTelas.zerar_pagamentos(self)
         #PREENCHE A TELA SCROOLPAGE
         self.ver_status_contas(self.user_atual)
         #SETA CAMPOS DA PAGINA
@@ -627,21 +627,6 @@ class MainApp(MDApp):
     def mudar_tela(self, id_tela):
         gerenciador_telas = self.root.ids["screen_manager"]
         gerenciador_telas.current = id_tela
-
-
-    # mudar para arquivo zerar telas
-    def reset_campos_pagamento(self):
-        # seta botoes de pagamento
-        self.enviar_parametro(pag="pagarpage", id="btn_alg_status", par="disabled", dado=False)
-        self.enviar_parametro(pag="pagarpage", id="btn_alg_status", par="text", dado="Pagar")
-        self.enviar_parametro(pag="pagarpage", id="btn_cond_status", par="disabled", dado=False)
-        self.enviar_parametro(pag="pagarpage", id="btn_cond_status", par="text", dado="Pagar")
-        self.enviar_parametro(pag="pagarpage", id="btn_agua_status", par="disabled", dado=False)
-        self.enviar_parametro(pag="pagarpage", id="btn_agua_status", par="text", dado="Pagar")
-        # seta label de valores a pagar
-        self.enviar_parametro(pag="pagarpage", id="lbl_alg_status", par="text", dado=f"Aluguel: R$0")
-        self.enviar_parametro(pag="pagarpage", id="lbl_cond_status", par="text", dado=f"Cond.: R$0")
-        self.enviar_parametro(pag="pagarpage", id="lbl_agua_status", par="text", dado=f"Agua: R$0")
 
     def pegar_cod_ou_credor(self, usuario):
         #PEGA CODIGO DO USUÁRIO E NOME CREDOR
