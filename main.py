@@ -252,6 +252,7 @@ class MainApp(MDApp):
 
     def ver_aluguel(self):
         campo = self.mes_ref + "_" + self.ano_ref
+        print(campo)
         try:
             #REQUISICAO DE VALORES DAS CONTAS FIXAS NO DB
             requisicao = requests.get(f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}/aluguel/"
@@ -281,8 +282,14 @@ class MainApp(MDApp):
             self.enviar_parametro(pag="aluguelpage", id="check_agua", par="active", dado=agua_ative)
             #IR PARA PAGINA ALUGUELPAGE
             self.mudar_tela("aluguelpage")
-        except:
-            toast("Erro ao pegar valores fixos!")
+        except Exception as ex:
+            self.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text",
+                                  dado=f"Cadastro mes de: {self.mes_ref}")
+            self.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="hint_text", dado="0")
+            self.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="hint_text", dado="0")
+            self.enviar_parametro(pag="aluguelpage", id="preco_agua", par="hint_text", dado="0")
+
+            self.mudar_tela("aluguelpage")
 
     def pagar_conta(self, usuario):
         #RESET CAMPOS DE PAGARPAGE
