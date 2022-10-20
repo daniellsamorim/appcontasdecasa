@@ -98,7 +98,7 @@ class MainApp(MDApp):
             #VAI PARA HOMEPAGE
             self.mudar_tela("homepage")
         except Exception as ex:
-            toast("Erro (info users)")
+            #toast("Erro (info users)")
             pass
 
     def seta_nomes_usuarios(self): #CALL: (CONFIGPAGE)
