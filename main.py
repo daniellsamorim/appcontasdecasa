@@ -1,7 +1,7 @@
 #set tamanho da tela
-# from kivy.config import Config
-# Config.set('graphics', 'width', '300')
-# Config.set('graphics', 'height', '600')
+from kivy.config import Config
+Config.set('graphics', 'width', '340')
+Config.set('graphics', 'height', '680')
 
 # gerenciamento de pastas, arquivos e entradas do teclado
 from kivy.core.window import Window

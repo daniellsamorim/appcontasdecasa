@@ -5,8 +5,9 @@
         MDLabel:
             pos_hint: {"right": 0.85, "top": 1}
             size_hint: 0.7, 0.07
-            text: "[color=#00CFDB]Relatorio de:[/color] User"
-            markup: True
+            text: "Relatorio de: User"
+            font_style: "H6"
+            text_color: 1, 1, 0, 1
             halign: 'center'
             valign: 'middle'
             id: pgmt_user
@@ -16,7 +17,7 @@
             pos_hint: {"right": 0.85, "top": 0.96}
             size_hint: 0.7, 0.07
             text: "Registrar em mes/ano"
-            font_style: "Overline"
+            font_style: "Button"
             markup: True
             halign: 'center'
             valign: 'middle'
@@ -43,31 +44,31 @@
                     size: self.size
                     pos: self.pos
             MDLabel:
-                text: "Cod"
-                pos_hint: {"right": 0.1, "top": 0.53}
-                size_hint: 0.01, 0.2
-                font_size: 13
+                text: "Código"
+                pos_hint: {"right": 0.25, "top": 0.53}
+                size_hint: 0.25, 0.1
+                halign:"center"
                 color:(0,0,0,1)
                 bold: True
             MDLabel:
                 text: "Descrição"
-                pos_hint: {"right": 0.33, "top": 0.53}
-                size_hint: 0.01, 0.1
-                font_size: 13
+                pos_hint: {"right": 0.50, "top": 0.53}
+                size_hint: 0.25, 0.1
+                halign:"center"
                 color:(0,0,0,1)
                 bold: True
             MDLabel:
                 text: "Data"
-                pos_hint: {"right": 1, "top": 0.53}
-                size_hint: 0.01, 0.1
-                font_size: 13
+                pos_hint: {"right": 0.75, "top": 0.53}
+                size_hint: 0.25, 0.1
+                halign:"center"
                 color:(0,0,0,1)
                 bold: True
             MDLabel:
                 text: "Valor"
-                pos_hint: {"right": 0.92, "top": 0.53}
-                size_hint: 0.01, 0.1
-                font_size: 13
+                pos_hint: {"right": 1, "top": 0.53}
+                size_hint: 0.25, 0.1
+                halign:"center"
                 color:(0,0,0,1)
                 bold: True
 
@@ -106,31 +107,31 @@
                     size: self.size
                     pos: self.pos
             MDLabel:
-                text: "Cod"
-                pos_hint: {"right": 0.08, "top": 0.53}
-                size_hint: 0.01, 0.1
-                font_size: 13
+                text: "Código"
+                pos_hint: {"right": 0.25, "top": 0.53}
+                size_hint: 0.25, 0.1
+                halign:"center"
                 color:(0,0,0,1)
                 bold: True
             MDLabel:
                 text: "Descrição"
-                pos_hint: {"right": 0.33, "top": 0.53}
-                size_hint: 0.01, 0.1
-                font_size: 13
+                pos_hint: {"right": 0.50, "top": 0.53}
+                size_hint: 0.25, 0.1
+                halign:"center"
                 color:(0,0,0,1)
                 bold: True
             MDLabel:
                 text: "Data"
-                pos_hint: {"right": 0.76, "top": 0.53}
-                size_hint: 0.01, 0.1
-                font_size: 13
+                pos_hint: {"right": 0.75, "top": 0.53}
+                size_hint: 0.25, 0.1
+                halign:"center"
                 color:(0,0,0,1)
                 bold: True
             MDLabel:
                 text: "Valor"
-                pos_hint: {"right": 0.92, "top": 0.53}
-                size_hint: 0.01, 0.1
-                font_size: 13
+                pos_hint: {"right": 1, "top": 0.53}
+                size_hint: 0.25, 0.1
+                halign:"center"
                 color:(0,0,0,1)
                 bold: True
 
@@ -164,7 +165,6 @@
                 text: "Digite o código para excluir um item"
                 halign: 'center'
                 valign: 'middle'
-                font_style: "Overline"
                 id: lbl_aviso
 
         #INPUT E BOTAO EXCLUIR ITEM
@@ -180,14 +180,14 @@
                     radius: 30, 00, 30, 00
             MDTextField:
                 hint_text: "Código"
-                pos_hint: {"right": 0.6, "top": 1}
-                size_hint: 0.5, 1
+                pos_hint: {"right": 0.5, "top": 1}
+                size_hint: 0.4, 1
                 id: code_input
             MDRectangleFlatButton:
                 id: btn_excluir
                 text: "Excluir"
                 pos_hint: {"right": 0.9, "top": 0.78}
-                size_hint: 0.15, 0.6
+                size_hint: 0.3, 0.6
                 on_release: app.apagar_item_lista(pgmt_user.text)
 
 

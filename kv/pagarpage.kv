@@ -20,7 +20,7 @@
             pos_hint: {"right": 1, "top": 0.95}
             size_hint: 1, 0.05
             text: "Registrar em mes/ano"
-            font_style: "Overline"
+            font_style: "Button"
             markup: True
             halign: 'center'
             valign: 'middle'
@@ -30,9 +30,10 @@
         GridLayout:
             rows: 1
             pos_hint: {"right": 0.9, "top": 0.90}
-            size_hint: 0.8, 0.075
+            size_hint: 0.8, 0.1
             MDTextField:
                 hint_text: "Descrição"
+                font_style: "Button"
                 mode: "round"
                 max_text_length: 15
                 helper_text: "Descreva o pagamento"
@@ -43,7 +44,7 @@
         GridLayout:
             rows: 1
             pos_hint: {"right": 0.9, "top": 0.80}
-            size_hint: 0.8, 0.075
+            size_hint: 0.8, 0.1
             MDTextField:
                 hint_text: "Valor"
                 mode: "round"
@@ -55,7 +56,7 @@
         GridLayout:
             rows: 1
             pos_hint: {"right": 0.9, "top": 0.70}
-            size_hint: 0.8, 0.075
+            size_hint: 0.8, 0.1
             MDTextField:
                 hint_text: "Data"
                 mode: "round"
