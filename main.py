@@ -639,7 +639,6 @@ class MainApp(MDApp):
         return cod_user, credor
 
     def enviar_parametro(self, pag, id, par, dado):
-
         tela = self.root.ids[pag]
         if par == "text":
             tela.ids[id].text = dado
