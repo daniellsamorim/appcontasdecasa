@@ -1,8 +1,9 @@
 #set tamanho da tela
-# from kivy.config import Config
-# Config.set('graphics', 'width', '340')
-# Config.set('graphics', 'height', '680')
-
+from kivy.config import Config
+Config.set('graphics', 'width', '340')
+Config.set('graphics', 'height', '680')
+#on Mi Note 10 lite - 1080*2340, dpi=440, density=2.75
+Config.set('graphics', 'dpi', '400')
 # gerenciamento de pastas, arquivos e entradas do teclado
 from kivy.core.window import Window
 from kivymd.uix.filemanager import MDFileManager
