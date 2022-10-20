@@ -9,11 +9,12 @@
         MDLabel:
             pos_hint: {"right": 1, "top": 0.98}
             size_hint: 1, 0.05
-            text: "[color=#00CFDB]Pagamentos:[/color] User"
+            text: "Pagamentos: User"
+            text_style: "H6"
+            theme_text_color: "Custom" #OBRIGATORIO CUSTOM PARA CUSTOMIZAR A FONTE
             markup: True
             halign: 'center'
             valign: 'middle'
-            color: (1,1,0,1)
             id: label_aviso_pago
 
         MDLabel:
@@ -21,7 +22,7 @@
             size_hint: 1, 0.05
             text: "Registrar em mes/ano"
             font_style: "Button"
-            markup: True
+            text_color: 1, 0, 0, 1
             halign: 'center'
             valign: 'middle'
             id: lbl_mes_referencia
