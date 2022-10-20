@@ -2,8 +2,7 @@
 from kivy.config import Config
 Config.set('graphics', 'width', '340')
 Config.set('graphics', 'height', '680')
-#on Mi Note 10 lite - 1080*2340, dpi=440, density=2.75
-Config.set('graphics', 'dpi', '400')
+
 # gerenciamento de pastas, arquivos e entradas do teclado
 from kivy.core.window import Window
 from kivymd.uix.filemanager import MDFileManager
@@ -25,17 +24,23 @@ import requests
 import certifi
 import os
 
+#CERTIFICADO DB
 os.environ["SSL_CERT_FILE"] = certifi.where()
+
+#ARQUIVO KV
 doc_main_kv = "main.kv"
 
 
 class MainApp(MDApp):
     dialog = None
     list_chaves = []
-
-    # user_atual = usuario logada na tela
-    # mes_ref = mes do campo de consulta
-    # ano_ref = ano do campo de consulta
+    '''
+    user_atual = usuário logado
+    mes_ref = mes do campo de referêcia
+    ano_ref = ano do campo de referêciareferêcia
+    nome_user1
+    nome_user2
+    '''
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -52,13 +57,14 @@ class MainApp(MDApp):
 
     def on_start(self):
         self.carregar_infos_usuario()
-        # DEFINE O ANO E MES NOS BOTOES DE CONSULTA
-        mes_ano = self.pegar_mes()
-        self.colher_mes(mes_ano[1])
-        self.colher_ano(mes_ano[2])
+        # DEFINE O ANO E MES NOS BOTOES DE REFERENCIA
+        mes_e_ano = self.pegar_mes()
+        self.definir_mes(mes_e_ano[1])
+        self.definir_ano(mes_e_ano[2])
 
     def tema(self):
-        self.theme_cls.theme_style = "Dark"  # Dark Light
+        #TEMA DO KIVY
+        self.theme_cls.theme_style = "Dark"  # Dark ou Light
         self.theme_cls.primary_palette = "Orange"
         MDScreen()
 
@@ -66,95 +72,91 @@ class MainApp(MDApp):
         try:
             with open("refreshtoken.txt", "r") as arquivo:
                 refresh_token = arquivo.read()
-
             # VER SE USUARIO TEM O REFRESHTOKEN PARA MANTER LOGADO
             local_id, id_token = self.firebase.trocar_token(refresh_token)
             self.local_id = local_id
             self.id_token = id_token
-
-            # PEGA INFOS DO USUARIO NO DB
-            requisicao = requests.get(
-                f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{local_id}.json?auth={self.id_token}")
-            requisicao_dic = requisicao.json()  # pegou dic pro id especifico
-
-            # CARREGA FOTOS E NOMES
+            # REQUISIÇÃO INFOS DOS USUARIOS NO DB
+            requisicao = requests.get(f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{local_id}"
+                                      f".json?auth={self.id_token}")
+            requisicao_dic = requisicao.json()
+            # CARREGA FOTOS E NOMES DOS USUÁRIOS
             foto_user1 = requisicao_dic["foto_user1"].replace("+", "\\")
             foto_user2 = requisicao_dic["foto_user2"].replace("+", "\\")
-            nome_user1 = requisicao_dic["nome_user1"]
-            nome_user2 = requisicao_dic["nome_user2"]
-            #SET FOTOS PERFIL HOMEPAGE
-            pagina = self.root.ids["homepage"]  # pega pagina pelo id
+            self.nome_user1 = requisicao_dic["nome_user1"]
+            self.nome_user2 = requisicao_dic["nome_user2"]
+            #SETA FOTOS E NOMES NO PERFIL DA HOMEPAGE
+            pagina = self.root.ids["homepage"]
             pagina.ids["foto_perfil_user1"].source = f'{foto_user1}'
             pagina.ids["foto_perfil_user2"].source = f'{foto_user2}'
-            pagina.ids["acoes_user1"].text = nome_user1
-            pagina.ids["acoes_user2"].text = nome_user2
-            #SET FOTOS PERFILPAGE
-            pagina = self.root.ids["fotoperfilpage"]  # pega pagina pelo id
+            pagina.ids["acoes_user1"].text = self.nome_user1
+            pagina.ids["acoes_user2"].text = self.nome_user2
+            #SETA FOTOS NO PERFILPAGE
+            pagina = self.root.ids["fotoperfilpage"]
             pagina.ids["foto_perfil_user1"].source = f'{foto_user1}'
             pagina.ids["foto_perfil_user2"].source = f'{foto_user2}'
-
-
-            # self.user1 = nome_user1
-            # self.user2 = nome_user2
-
+            #VAI PARA HOMEPAGE
             self.mudar_tela("homepage")
         except Exception as ex:
+            toast("Erro (info users)")
             pass
 
-
-    def pegar_nomes_usuarios(self):  # SETA OS CAMPOS DE USUÁRIOS
-        # PEGA O NOME DOS USUÁRIOS CADASTRADOS
-        nome_user1 = self.pegar_texto(pagina="homepage", id_pagina="acoes_user1", parametro="text")
-        nome_user2 = self.pegar_texto(pagina="homepage", id_pagina="acoes_user2", parametro="text")
-        # SETA OS CAMPOS DE INPUT COM OS NOMES DE USUÁRIOS
-        self.enviar_parametro(pag="usernamepage", id="nome_user1", par="text", dado=nome_user1)
-        self.enviar_parametro(pag="usernamepage", id="nome_user2", par="text", dado=nome_user2)
-        # VAI PRA TELA DE CADASTRO DE USUÁRIOS
+    def seta_nomes_usuarios(self): #CALL: (CONFIGPAGE)
+        # SETA OS CAMPOS DE INPUT DA TELA USERNAMEPAGE COM OS NOMES DE USUÁRIOS
+        self.enviar_parametro(pag="usernamepage", id="nome_user1", par="text", dado=self.nome_user1)
+        self.enviar_parametro(pag="usernamepage", id="nome_user2", par="text", dado=self.nome_user2)
+        # VAI PRA TELA DE CADASTRO DE NOMES DE USUÁRIOS
         self.mudar_tela('usernamepage')
 
-    def alterar_nome_usuarios(self, nome_user1, nome_user2):
-
+    def alterar_nome_usuarios(self, nome_user1, nome_user2): #CALL: (USERNAMEPAGE)
         if nome_user1 and nome_user2:
-            # coloca a primeira letra em maiúscula
+            #PEGA TEXT DOS INPUTS E SETA 1A LETRA MAIUSCULA
             nome_user1 = nome_user1.title()
             nome_user2 = nome_user2.title()
-
+            #SALVA NOMES NO BD
             link = f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}.json?auth={self.id_token}"
             info = f'{{"nome_user1": "{nome_user1}", "nome_user2": "{nome_user2}"}}'
             requests.patch(link, data=info)
-
+            #SETA NOMES DE USUÁRIOS NA HOMEPAGE
             pagina_home = self.root.ids["homepage"]  # pega pagina pelo id
             pagina_home.ids["acoes_user1"].text = nome_user1
             pagina_home.ids["acoes_user2"].text = nome_user2
-
+            #SETA NOVOS USUÁRIOS
+            self.nome_user1 = nome_user1
+            self.nome_user2 = nome_user2
+            #VAI PARA HOMEPAGE
             self.mudar_tela("homepage")
         else:
-            pagina_nome = self.root.ids["usernamepage"]  # pega pagina pelo id
-            pagina_nome.ids["label_aviso"].text = "Defina os nomes!"
-            pagina_nome.ids["label_aviso"].color = (1, 0, 0, 1)
+            toast("Preencha todos os nomes!")
 
-    def abrir_lista_opcoes(self, menu):  # ABRE O MENU DE OPÇOES CHAMADO
+    def abrir_lista_opcoes(self, menu):  # ABRE O MENU DE OPÇOES DOS BOTOES
         menu_itens = []
         valor = None
         if menu == "menu_telas":
             menu_itens = ["Configurações"]
             function = self.acoes_menu
+
         elif menu == "menu_mes":
             mes_dic = self.pegar_mes()
             menu_itens = list(mes_dic[3].values())
-            function = self.colher_mes
+            function = self.definir_mes
+
         elif menu == "menu_ano":
             for ano in range(2022, 2031):
                 menu_itens.append(ano)
-                function = self.colher_ano
+            function = self.definir_ano
+
         elif menu == "menu_user1":
-            menu_itens = ["Cadastrar despesas", "Ver minhas despesas", "Cadastrar contas fixas", "Relatórios"]
+            menu_itens = [f"[color=#00CFDB]Menu {self.nome_user1}[/color]", "Cadastrar despesas", "Ver minhas despesas",
+                          "Cadastrar contas fixas", "Relatórios"]
             function = self.acoes_user
-            self.user_atual = self.pegar_texto(pagina="homepage", id_pagina="acoes_user1", parametro="text")
+            self.user_atual = self.nome_user1
+
         elif menu == "menu_user2":
-            menu_itens = ["Cadastrar despesas", "Ver minhas despesas", "Cadastrar contas fixas", "Relatórios"]
+            menu_itens = [f"[color=#00CFDB]Menu {self.nome_user2}[/color]", "Cadastrar despesas", "Ver minhas despesas",
+                          "Cadastrar contas fixas", "Relatórios"]
             function = self.acoes_user
-            self.user_atual = self.pegar_texto(pagina="homepage", id_pagina="acoes_user2", parametro="text")
+            self.user_atual = self.nome_user2
 
         bottom_sheet_menu = MDListBottomSheet()
         for i in range(0, len(menu_itens)):
@@ -164,8 +166,7 @@ class MainApp(MDApp):
                 bottom_sheet_menu.add_item(f"{menu_itens[i]}", lambda x, y=i: function(f"{menu_itens[y]}"))
         bottom_sheet_menu.open()
 
-    def acoes_user(self, acao):
-
+    def acoes_user(self, acao): #EXECUTA AÇÕES DOS BOTÕES
         if acao == "Cadastrar despesas":
             self.pagar_conta(self.user_atual)
         if acao == "Ver minhas despesas":
@@ -181,22 +182,16 @@ class MainApp(MDApp):
         if acao == "Configurações":
             self.mudar_tela("configpage")
 
-
-    def pegar_credor(self, user_atual):
-        user1 = self.pegar_texto(pagina="homepage", id_pagina="acoes_user1", parametro="text")
-        user2 = self.pegar_texto(pagina="homepage", id_pagina="acoes_user2", parametro="text")
-        if user_atual == user1:
-            credor = user2
+    def pegar_credor(self, user_atual):#PEGA NOME USUÁRIO OPOSTO (CREDOR)
+        if user_atual == self.nome_user1:
+            credor = self.nome_user2
         else:
-            credor = user1
+            credor = self.nome_user1
         return credor
 
     def calcular_pag_aluguel(self):
-
-        # global aluguel_vl, condominio_vl, agua_vl, aluguel, condominio, agua
         try:
-
-            # pega os valores de aluguel, condominio e água
+            # PEGA OS CAMPOS SETADOS PELO USUÁRIO
             pagina_aluguel = self.root.ids["aluguelpage"]
             aluguel_vl = pagina_aluguel.ids["preco_aluguel"].text.replace(",", ".")
             condominio_vl = pagina_aluguel.ids["preco_condominio"].text.replace(",", ".")
@@ -204,13 +199,13 @@ class MainApp(MDApp):
             agua_inclusa = pagina_aluguel.ids["check_agua"].active
             cond_inclusa = pagina_aluguel.ids["check_cond"].active
 
-            aluguel = aluguel_vl
-            condominio = condominio_vl
-            agua = agua_vl
+            aluguel = float(aluguel_vl)
+            condominio = float(condominio_vl)
+            agua = float(agua_vl)
 
-            float(aluguel)
-            float(condominio)
-            float(agua)
+            # float(aluguel)
+            # float(condominio)
+            # float(agua)
 
             if aluguel != "" and condominio != "" and agua != "":
                 if cond_inclusa or agua_inclusa:
@@ -220,13 +215,10 @@ class MainApp(MDApp):
                             "label_cond"].text = f"(Valor real aluguel: R$ {float(aluguel) - float(condominio)})"
                         pagina_aluguel.ids["label_agua"].text = f"Água a pagar: R$ {agua}"
                         condominio = 0
-
                     if agua_inclusa:
                         if cond_inclusa:
-
                             pagina_aluguel.ids["label_cond"].text = f"Agua e condominio incluso"
-                            pagina_aluguel.ids[
-                                "label_agua"].text = f"(Valor real aluguel: R$ {float(aluguel) - float(condominio) - float(agua)})"
+                            pagina_aluguel.ids["label_agua"].text = f"(Valor real aluguel: R$ {float(aluguel) - float(condominio) - float(agua)})"
                             agua = 0
                             condominio = 0
                         else:
@@ -246,15 +238,12 @@ class MainApp(MDApp):
         self.gravar_pag_aluguel(aluguel_vl, condominio_vl, agua_vl, aluguel, condominio, agua)
 
     def gravar_pag_aluguel(self, *args):
-
-        mes = self.pegar_texto(pagina="homepage", id_pagina="btn_mes", parametro="text")
-        ano = self.pegar_texto(pagina="homepage", id_pagina="btn_ano", parametro="text")
-        campo = mes + "_" + ano
-
-        check_agua = self.pegar_texto(pagina="aluguelpage", id_pagina="check_agua", parametro="active")
-        check_cond = self.pegar_texto(pagina="aluguelpage", id_pagina="check_cond", parametro="active")
-
-        # cadastrar valores a pagar
+        #CAMPO PARA URL DB
+        campo = self.mes_ref + "_" + self.ano_ref
+        #VERIFICAR CHECKBOX AGUA E CONCOMINIO INCLUSO
+        check_agua = self.pegar_parametro(pag="aluguelpage", id="check_agua", par="active")
+        check_cond = self.pegar_parametro(pag="aluguelpage", id="check_cond", par="active")
+        #CADASTRAR VALORES NO DB
         link = f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}/aluguel/{campo}.json?auth={self.id_token}"
         info = f'{{"aluguel": "{args[0]}", "condominio": "{args[1]}", "agua": "{args[2]}", "aluguel_ttl": "{args[3]}",' \
                f' "condominio_ttl": "{args[4]}", "agua_ttl": "{args[5]}", "check_agua": "{check_agua}",' \
@@ -262,13 +251,11 @@ class MainApp(MDApp):
         requests.patch(link, data=info)
 
     def ver_aluguel(self):
-
-        mes, ano = self.mes_ano_solicitado()
-        campo = mes + "_" + ano
-
+        campo = self.mes_ref + "_" + self.ano_ref
         try:
-            requisicao = requests.get(
-                f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}/aluguel/{campo}.json?auth={self.id_token}")
+            #REQUISICAO DE VALORES DAS CONTAS FIXAS NO DB
+            requisicao = requests.get(f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}/aluguel/"
+                                      f"{campo}.json?auth={self.id_token}")
             requisicao_dic = requisicao.json()
             # pegar oa valores dos campos no dict
             cond = requisicao_dic["condominio"]
@@ -285,52 +272,37 @@ class MainApp(MDApp):
                 agua_ative = True
             else:
                 agua_ative = False
-
             self.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text",
-                                  dado=f"Cadastro de: {mes}/{ano}")
+                                  dado=f"Cadastro de: {self.mes_ref}/{self.ano_ref}")
             self.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="text", dado=str(aluguel))
             self.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="text", dado=str(cond))
             self.enviar_parametro(pag="aluguelpage", id="preco_agua", par="text", dado=str(agua))
             self.enviar_parametro(pag="aluguelpage", id="check_cond", par="active", dado=cond_ative)
             self.enviar_parametro(pag="aluguelpage", id="check_agua", par="active", dado=agua_ative)
-
+            #IR PARA PAGINA ALUGUELPAGE
             self.mudar_tela("aluguelpage")
         except:
-            # link pro firebase
-            self.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text",
-                                  dado=f"Cadastro mes de: {mes}")
-            self.mudar_tela("aluguelpage")
-
-    def pegar_cod_user(self, usuario):
-        nome_user = self.pegar_texto(pagina="homepage", id_pagina="acoes_user1", parametro="text")
-        if usuario == nome_user:
-            cod_user = "user1"
-        else:
-            cod_user = "user2"
-        return cod_user
+            toast("Erro ao pegar valores fixos!")
 
     def pagar_conta(self, usuario):
-
-        # user = self.pegar_cod_user(usuario)
-
+        #RESET CAMPOS DE PAGARPAGE
         ZerarTelas.zerar_telapagar(self)
-
+        #PEGAR DATA ATUAL
         data_now = self.pegar_mes()
-        mes = self.mes_ref
-        ano = self.ano_ref
-
-        # reseta os campos da tela pagamentos
+        # RESET CAMPOS DE PAGAMENTOS
         self.reset_campos_pagamento()
+        #PREENCHE A TELA SCROOLPAGE
         self.ver_status_contas(self.user_atual)
-        # enviar parametro: Qual a pagina? Qual id? Parametro = text/color? qual dado?
+        #SETA CAMPOS DA PAGINA
         self.enviar_parametro(pag="pagarpage", id="label_aviso_pago", par="text",
                               dado=f"[color=#00CFDB]Pagamentos:[/color] {self.user_atual}")
-        self.enviar_parametro(pag="pagarpage", id="lbl_mes_referencia", par="text", dado=f"Registrar em {mes}/{ano}")
+        self.enviar_parametro(pag="pagarpage", id="lbl_mes_referencia", par="text", dado=f"Registrar em {self.mes_ref}/{self.ano_ref}")
         self.enviar_parametro(pag="pagarpage", id="input_data", par="text", dado=data_now[0])
-        # campo do database
-        campo = mes + "_" + ano
+        #SETA CAMPO DA URL DE REQUISICAO
+        campo = self.mes_ref + "_" + self.ano_ref
         try:
-            self.enviar_parametro(pag="pagarpage", id="label_aviso", par="text", dado=f"Contas fixas: {mes}")
+            #REQUISICAO DB
+            self.enviar_parametro(pag="pagarpage", id="label_aviso", par="text", dado=f"[color=#00CFDB]Contas fixas:[/color] {self.mes_ref}")
             requisicao = requests.get(
                 f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}/aluguel/{campo}.json?auth={self.id_token}")
             requisicao_dic = requisicao.json()
@@ -338,12 +310,11 @@ class MainApp(MDApp):
             agua = requisicao_dic["agua_ttl"]
             cond = requisicao_dic["condominio_ttl"]
             alug = requisicao_dic["aluguel_ttl"]
-
-            # preencher campos
+            # PREENCHER OS CAMPOS DA TELA PAGARPAGE
             self.enviar_parametro(pag="pagarpage", id="lbl_alg_status", par="text", dado=f"Aluguel: R${alug}")
             self.enviar_parametro(pag="pagarpage", id="lbl_cond_status", par="text", dado=f"Cond.: R${cond}")
             self.enviar_parametro(pag="pagarpage", id="lbl_agua_status", par="text", dado=f"Agua: R${agua}")
-            # de
+            #DEFINE OS BOTOES PAGAR OU INCLUSO NA TELA PAGARPAGE
             if alug == "0":
                 self.enviar_parametro(pag="pagarpage", id="btn_alg_status", par="disabled", dado=True)
                 self.enviar_parametro(pag="pagarpage", id="btn_alg_status", par="text", dado="Incluso")
@@ -357,55 +328,41 @@ class MainApp(MDApp):
             self.enviar_parametro(pag="pagarpage", id="btn_alg_status", par="disabled", dado=True)
             self.enviar_parametro(pag="pagarpage", id="btn_cond_status", par="disabled", dado=True)
             self.enviar_parametro(pag="pagarpage", id="btn_agua_status", par="disabled", dado=True)
-            self.enviar_parametro(pag="pagarpage", id="label_aviso", par="text", dado=f"Cadastre aluguel {mes}")
-
+            self.enviar_parametro(pag="pagarpage", id="label_aviso", par="text", dado=f"Cadastre aluguel {self.mes_ref}")
         credor = self.pegar_credor(usuario)
         self.enviar_parametro(pag="pagarpage", id="btn_user_credor", par="text", dado=f"Cadastrar devo a {credor}")
         self.mudar_tela("pagarpage")
 
-        # vai pra tela de pagamentos (funcao: cadastrar_pagamento abaixo) levando as variaveis acima
-
     def cadastrar_pagamento(self, tipo):
-
-        # pegar texto: Variavel = Qual pagina? Qual id?
-        descricao = self.pegar_texto(pagina="pagarpage", id_pagina="input_desc", parametro="text").title()
-        data = self.pegar_texto(pagina="pagarpage", id_pagina="input_data", parametro="text")
-        valor = self.pegar_texto(pagina="pagarpage", id_pagina="input_valor", parametro="text").replace(",", ".")
+        #PEGA OS INPUTS DO USUARIO PARA FAZER A REQUISIÇÃO POST NO DB
+        descricao = self.pegar_parametro(pag="pagarpage", id="input_desc", par="text").title()
+        data = self.pegar_parametro(pag="pagarpage", id="input_data", par="text")
+        valor = self.pegar_parametro(pag="pagarpage", id="input_valor", par="text").replace(",", ".")
         raiz = "pagamentos"
-        mes, ano = self.mes_ano_solicitado()
-
-        cod_user = self.pegar_cod_user(self.user_atual)
-
+        cod_user = self.pegar_cod_ou_credor(self.user_atual)[0]
         try:
             valor = float(valor)
-
             if tipo == "devedor":
                 raiz = "devedor"
-
             if descricao and data and valor:
-
-                campo = cod_user + "_" + mes + "_" + ano
-
-                # cadastrar pagamento no BD
+                campo = cod_user + "_" + self.mes_ref + "_" + self.ano_ref
+                #CADASTRAR DADOS
                 link = f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}/{raiz}/{campo}.json?auth={self.id_token}"
                 data = f'{{"descricao": "{descricao}", "data": "{data}", "valor": "{valor}"}}'
                 requests.post(link, data)
-
+                #LIMPAR O BANNER
                 self.limpar_banner()
-                credor = self.pegar_credor(self.user_atual)
-
-                self.preencher_banner(self.user_atual, mes, ano, credor)
-
+                #PREENCHE O BANNER
+                credor = self.pegar_cod_ou_credor(self.user_atual)[1]
+                self.preencher_banner(self.user_atual, self.mes_ref, self.ano_ref, credor)
+                #IR PARA TELA DO BANNER
                 self.mudar_tela("scrollpage")
-
             else:
-                # enviar parametro: Qual a pagina? Qual id? Parametro = text/color? qual dado?
-                toast("Nenhum campo pode ser vazio")
+                toast("Nenhum campo pode ser vazio!")
         except Exception as ex:
-            toast("Preencha os campos corretamente!")
+            toast(f"Preencha os campos corretamente!")
 
-    def pagar_aluguel(self, *args):
-
+    def pagar_conta_fixa(self, *args):
         # PREENCHE OS DADOS DO BOTAO DE CONTAS FIXAS
         if args[0] == "alg":
             descricao = args[1][0:7] + "_" + self.mes_ref + "_" + self.ano_ref
@@ -422,17 +379,12 @@ class MainApp(MDApp):
         # VAI PARA FUNÇÃO DE PAGAMENTO
         self.cadastrar_pagamento("pagamentos")
 
-    def apagar_item_lista(self, user):  # recebe: nome usuario(tratar texto)
-
-        # PEGA MES E ANO DE REFERÊNCIA
-        mes = self.mes_ref
-        ano = self.ano_ref
-        cod_user = self.pegar_cod_user(self.user_atual)
+    def apagar_item_lista(self, user):
         # PREENCHE O CAMPO PARA REQUISICAO DB
-        campo = cod_user + "_" + mes + "_" + ano
+        cod_user = self.pegar_cod_ou_credor(self.user_atual)[0]
+        campo = cod_user + "_" + self.mes_ref + "_" + self.ano_ref
         # PEGA CODIGO DO ITEM A SER EXCLUIDO
-        codigo = self.pegar_texto(pagina="scrollpage", id_pagina="code_input", parametro="text")
-
+        codigo = self.pegar_parametro(pag="scrollpage", id="code_input", par="text")
         if codigo:
             for code in self.list_chaves:
                 if codigo == code[1:7].replace("-", "x").lower():
@@ -450,80 +402,66 @@ class MainApp(MDApp):
                         requests.delete(link)
                     except:
                         pass
-                    self.enviar_parametro(pag="scrollpage", id="lbl_aviso", par="text",
-                                          dado="Item excluido com sucesso")
-                    self.enviar_parametro(pag="scrollpage", id="lbl_aviso", par="color", dado=(1, 1, 0, 1))
-
+                    toast("Item excluido da lista!")
+                    #RESETA O BANNER
                     credor = self.pegar_credor(cod_user)
                     self.limpar_banner()
-                    self.preencher_banner(self.user_atual, mes, ano, credor)
+                    self.preencher_banner(self.user_atual, self.mes_ref, self.ano_ref, credor)
                     self.enviar_parametro(pag="scrollpage", id="code_input", par="text", dado="")
-
                     break
                 else:
-                    self.enviar_parametro(pag="scrollpage", id="lbl_aviso", par="text",
-                                          dado="COD não existe na lista")
-                    self.enviar_parametro(pag="scrollpage", id="lbl_aviso", par="color",
-                                          dado=(1, 1, 0, 1))
+                    toast("Código não encontrado na lista!")
         else:
-            self.enviar_parametro(pag="scrollpage", id="lbl_aviso", par="text",
-                                  dado="COD não pode ser vazio!")
-            self.enviar_parametro(pag="scrollpage", id="lbl_aviso", par="color", dado=(1, 1, 0, 1))
+            toast("Digite um código para excluir da lista!")
 
     def limpar_banner(self):
-
-        lista_pagamentos = self.pegar_texto(pagina="scrollpage", id_pagina="lista_pagamentos", parametro="id")
-        # lista de pagamento é o scroollview, entao remove seus childrens (filhos)
+        #REMOVE OS DADOS DA LISTA_PAGAMENTOS
+        lista_pagamentos = self.pegar_parametro(pag="scrollpage", id="lista_pagamentos", par="id")
         for item in list(lista_pagamentos.children):
             lista_pagamentos.remove_widget(item)
-
-        lista_dividas = self.pegar_texto(pagina="scrollpage", id_pagina="lista_dividas", parametro="id")
-        # lista de pagamento é o scroollview, entao remove seus childrens (filhos)
+        #REMOVE OS DADOS DA LISTA_DIVIDAS
+        lista_dividas = self.pegar_parametro(pag="scrollpage", id="lista_dividas", par="id")
         for item in list(lista_dividas.children):
             lista_dividas.remove_widget(item)
 
     def preencher_banner(self, *args):  # recebe: usuario[0], spinner mes[1], spinner ano[2] e credor[3]
-
         # LIMPA O BANNER PARA ENTRADA DE NOVOS DADOS
         self.limpar_banner()
         self.enviar_parametro(pag="scrollpage", id="code_input", par="text", dado="")
-
         # PREENCHE TITULO DA PAGINA DE PAGAMENTOS
-        self.enviar_parametro(pag="scrollpage", id="pgmt_user", par="text", dado=f"Relatório de: {args[0]}")
+        self.enviar_parametro(pag="scrollpage", id="pgmt_user", par="text", dado=f"[color=#00CFDB]Relatório de:[/color] {args[0]}")
         self.enviar_parametro(pag="scrollpage", id="pgmt_mes", par="text", dado=f"{args[1]}/{args[2]}")
-
         # REQUISCAO NO BD
-        cod_user = self.pegar_cod_user(args[0])
+        cod_user = self.pegar_cod_ou_credor(args[0])[0]
         campo = cod_user + "_" + args[1] + "_" + args[2]
-
         requisicao = requests.get(
             f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}/pagamentos/{campo}.json?auth={self.id_token}")
         requisicao_dic = requisicao.json()
-        lista_pagamentos = self.pegar_texto(pagina="scrollpage", id_pagina="lista_pagamentos", parametro="id")
+        lista_pagamentos = self.pegar_parametro(pag="scrollpage", id="lista_pagamentos", par="id")
+        #SOMA TODOS PAGAMENTOS DA LISTA
         soma = self.publicar_banner(lista_pagamentos, requisicao_dic)
-
         if soma == None:
             soma = "0"
         else:
             soma = "{:.2f}".format(soma)
         self.enviar_parametro(pag="scrollpage", id="lbl_soma_pgm", par="text", dado=f"Total despesas casa: R${soma}")
 
+        #SOMA TODAS AS DIVIDAS DA LISTA
         requisicao = requests.get(
             f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}/devedor/{campo}.json?auth={self.id_token}")
         requisicao_dic = requisicao.json()
-        lista_dividas = self.pegar_texto(pagina="scrollpage", id_pagina="lista_dividas", parametro="id")
+        lista_dividas = self.pegar_parametro(pag="scrollpage", id="lista_dividas", par="id")
         soma = self.publicar_banner(lista_dividas, requisicao_dic)
-
         if soma == None:
             soma = "0"
         else:
             soma = "{:.2f}".format(soma)
         self.enviar_parametro(pag="scrollpage", id="lbl_soma_div", par="text", dado=f"Total devo a {args[3]}: R${soma}")
+        #IR PARA TELA DE PAGAMENTOS
         self.mudar_tela("scrollpage")
 
     def publicar_banner(self, *args):  # recebe lista e requisicao_dic e soma
         soma = 0
-
         try:
             for local_id_user in args[1]:
                 valor = args[1][local_id_user]["valor"]
@@ -540,60 +478,44 @@ class MainApp(MDApp):
         except:
             pass
 
-
-
-    def pegar_credor(self, user):
-        user1 = self.pegar_texto(pagina="homepage", id_pagina="acoes_user1", parametro="text")
-        user2 = self.pegar_texto(pagina="homepage", id_pagina="acoes_user2", parametro="text")
-        if user1 == user:
-            credor = user2
-        else:
-            credor = user1
-        return credor
-
     def ver_status_contas(self, *args):
         lista = []
-        mes_ref = self.mes_ref
-        ano_ref = self.ano_ref
-
         try:
-            campo = "user1" + "_" + mes_ref + "_" + ano_ref
+            campo = "user1" + "_" + self.mes_ref + "_" + self.ano_ref
             lista = self.criar_lista(campo, lista)
         except:
             pass
         try:
-            campo = "user2" + "_" + mes_ref + "_" + ano_ref
+            campo = "user2" + "_" + self.mes_ref + "_" + self.ano_ref
             lista = self.criar_lista(campo, lista)
         except:
             pass
         # CASO ITEM NA LISTA, DESABILITA BOTAO DE PAGAMENTO
         for item in lista:
-            if item == "Aluguel" + "_" + mes_ref + "_" + ano_ref:
+            if item == "Aluguel" + "_" + self.mes_ref + "_" + self.ano_ref:
                 self.enviar_parametro(pag="pagarpage", id="btn_alg_status", par="disabled", dado=True)
                 self.enviar_parametro(pag="pagarpage", id="btn_alg_status", par="text", dado="Pago")
-            if item == "Cond" + "_" + mes_ref + "_" + ano_ref:
+            if item == "Cond" + "_" + self.mes_ref + "_" + self.ano_ref:
                 self.enviar_parametro(pag="pagarpage", id="btn_cond_status", par="disabled", dado=True)
                 self.enviar_parametro(pag="pagarpage", id="btn_cond_status", par="text", dado="Pago")
-            if item == "Agua" + "_" + mes_ref + "_" + ano_ref:
+            if item == "Agua" + "_" + self.mes_ref + "_" + self.ano_ref:
                 self.enviar_parametro(pag="pagarpage", id="btn_agua_status", par="disabled", dado=True)
                 self.enviar_parametro(pag="pagarpage", id="btn_agua_status", par="text", dado="Pago")
 
     def relatorio_pagamento(self, *args):  # recebe: user1, user2
 
-        cod_userx = self.pegar_cod_user(args[0])
-        cod_usery = self.pegar_cod_user(args[1])
+        cod_userx = self.pegar_cod_ou_credor(args[0])[0]
+        cod_usery = self.pegar_cod_ou_credor(args[1])[0]
 
-        mes_ref, ano_ref = self.mes_ano_solicitado()
-
-        self.enviar_parametro(pag="relatoriopage", id="relat_mes", par="text", dado=f"[color=#FF0000]{mes_ref}/{ano_ref}[/color]")
+        self.enviar_parametro(pag="relatoriopage", id="relat_mes", par="text", dado=f"[color=#FF0000]{self.mes_ref}/{self.ano_ref}[/color]")
         self.enviar_parametro(pag="relatoriopage", id="lbl_rel_user1", par="text", dado=f"Relatório de {args[0]}:")
         self.enviar_parametro(pag="relatoriopage", id="lbl_rel_user2", par="text", dado=f"Relatório de {args[1]}:")
 
         # pegar pagamentos para user1
-        total1 = self.pegar_total_pago(cod_userx, mes_ref, ano_ref, "pagamentos")
+        total1 = self.pegar_total_pago(cod_userx, self.mes_ref, self.ano_ref, "pagamentos")
         self.enviar_parametro(pag="relatoriopage", id="lbl_pago_user1", par="text", dado=f"Despesas: R${total1:,.2f}")
         # pegar pagamentos para user2
-        total2 = self.pegar_total_pago(cod_usery, mes_ref, ano_ref, "pagamentos")
+        total2 = self.pegar_total_pago(cod_usery, self.mes_ref, self.ano_ref, "pagamentos")
         self.enviar_parametro(pag="relatoriopage", id="lbl_pago_user2", par="text", dado=f"Despesas: R${total2:,.2f}")
 
         total_despesas = total1 + total2
@@ -604,11 +526,11 @@ class MainApp(MDApp):
                               dado=f"Total pra cada: R${total_despesas / 2:,.2f}")
 
         # pegar pagamentos para user1
-        total3 = self.pegar_total_pago(cod_userx, mes_ref, ano_ref, "devedor")
+        total3 = self.pegar_total_pago(cod_userx, self.mes_ref, self.ano_ref, "devedor")
         self.enviar_parametro(pag="relatoriopage", id="lbl_dev_user1", par="text",
                               dado=f"Deve a {args[1]}: R${total3:,.2f}")
         # pegar pagamentos para user2
-        total4 = self.pegar_total_pago(cod_usery, mes_ref, ano_ref, "devedor")
+        total4 = self.pegar_total_pago(cod_usery, self.mes_ref, self.ano_ref, "devedor")
         self.enviar_parametro(pag="relatoriopage", id="lbl_dev_user2", par="text",
                               dado=f"Deve a {args[0]}: R${total4:,.2f}")
 
@@ -698,7 +620,6 @@ class MainApp(MDApp):
         self.fazer_logoff()
 
     def fazer_logoff(self):
-
         path = os.path.join("refreshtoken.txt")
         os.remove(path)
         self.mudar_tela("loginpage")
@@ -706,18 +627,6 @@ class MainApp(MDApp):
     def mudar_tela(self, id_tela):
         gerenciador_telas = self.root.ids["screen_manager"]
         gerenciador_telas.current = id_tela
-
-    # mudar ja pegando mes e ano
-    def colher_mes(self, mes):
-        mes_btn = self.root.ids["homepage"]
-        mes_btn.ids["btn_mes"].text = mes
-        self.mes_ref = mes
-
-    def colher_ano(self, ano):
-        ano_btn = self.root.ids["homepage"]
-        ano_btn.ids["btn_ano"].text = ano
-        self.ano_ref = ano
-
 
 
     # mudar para arquivo zerar telas
@@ -733,6 +642,16 @@ class MainApp(MDApp):
         self.enviar_parametro(pag="pagarpage", id="lbl_alg_status", par="text", dado=f"Aluguel: R$0")
         self.enviar_parametro(pag="pagarpage", id="lbl_cond_status", par="text", dado=f"Cond.: R$0")
         self.enviar_parametro(pag="pagarpage", id="lbl_agua_status", par="text", dado=f"Agua: R$0")
+
+    def pegar_cod_ou_credor(self, usuario):
+        #PEGA CODIGO DO USUÁRIO E NOME CREDOR
+        if usuario == self.nome_user1:
+            cod_user = "user1"
+            credor = self.nome_user2
+        else:
+            cod_user = "user2"
+            credor = self.nome_user1
+        return cod_user, credor
 
     def enviar_parametro(self, pag, id, par, dado):
 
@@ -750,20 +669,25 @@ class MainApp(MDApp):
         if par == "source":
             tela.ids[id].source = dado
 
-    def pegar_texto(self, pagina, id_pagina, parametro):
-        tela = self.root.ids[pagina]
-        if parametro == "text":
-            dado = tela.ids[id_pagina].text
-        if parametro == "active":
-            dado = tela.ids[id_pagina].active
-        if parametro == "id":
-            dado = tela.ids[id_pagina]
+    def pegar_parametro(self, pag, id, par):
+        tela = self.root.ids[pag]
+        if par == "text":
+            dado = tela.ids[id].text
+        if par == "active":
+            dado = tela.ids[id].active
+        if par == "id":
+            dado = tela.ids[id]
         return dado
 
-    def mes_ano_solicitado(self):
-        mes_solicitado = self.pegar_texto(pagina="homepage", id_pagina="btn_mes", parametro="text")
-        ano_solicitado = self.pegar_texto(pagina="homepage", id_pagina="btn_ano", parametro="text")
-        return mes_solicitado, ano_solicitado
+    def definir_mes(self, mes):
+        btn = self.root.ids["homepage"]
+        btn.ids["btn_mes"].text = mes
+        self.mes_ref = mes
+    def definir_ano(self, ano):
+        btn = self.root.ids["homepage"]
+        btn.ids["btn_ano"].text = ano
+        self.ano_ref = ano
+
 
     def pegar_mes(self):  # RETORNA(DATA DE HOJE[0], MES POR EXTENSO[1], ANO[2] E DICT DE MESES[3])
 

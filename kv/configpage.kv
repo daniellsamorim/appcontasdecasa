@@ -19,20 +19,21 @@
 
         #CADASTRAR USUÁRIOS
         MDRectangleFlatIconButton:
+            text: "Alterar nomes usuários"
             pos_hint: {"right": 0.9, "top": 0.8}
             size_hint: 0.8, 0.10
             icon: "badge-account-horizontal"
             line_color: (1, 0, 0, 1)
-            text: "Cadastrar usuários"
-            on_release: app.pegar_nomes_usuarios()
+            on_release: app.seta_nomes_usuarios()
 
         #ESCOLHER FOTO PERFIL
         MDRectangleFlatIconButton:
+            text: "Escolher foto perfil (Breve)"
             pos_hint: {"right": 0.9, "top": 0.65}
             size_hint: 0.8, 0.10
             icon: "account-box-multiple"
             line_color: (1, 0, 0, 1)
-            text: "Escolher foto perfil"
+            disabled: True
             on_release: app.mudar_tela("fotoperfilpage")
 
         #FAZER LOGOFF

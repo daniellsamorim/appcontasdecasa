@@ -4,6 +4,7 @@
         #TITULO DA PAGINA
         MDLabel:
             text: "[color=#00CFDB]Relatório Pagamentos:[/color]"
+            font_style: "H6"
             markup: True
             pos_hint: {"right": 1, "top": 1}
             size_hint: 1, 0.07
@@ -12,13 +13,14 @@
 
         #MES E ANO DE REFERENCIA
         MDLabel:
+            text: "[color=#FF0000]Mês[/color]"
             pos_hint: {"right": 1, "top": 0.96}
             size_hint: 1, 0.07
-            halign: "center"
-            font_style: "Caption"
-            bold: True
-            text: "[color=#FF0000]Mês[/color]"
             markup: True
+            halign: "center"
+            text_style: "Button"
+            theme_text_color: "Custom"
+            text_color: 1, 0, 0, 1
             id: relat_mes
 
         MDFloatLayout:
