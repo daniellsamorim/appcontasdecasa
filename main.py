@@ -1,7 +1,7 @@
 #SETA TAMANHO DA JANELA DO KIVY (COMENTE PARA DEPLOY)
 from kivy.config import Config
-Config.set('graphics', 'width', '340')
-Config.set('graphics', 'height', '680')
+Config.set('graphics', 'width', '490')
+Config.set('graphics', 'height', '780')
 
 #REPOSICIONA TELA PARA O TECLADO ANDROID/IOS NAO PASSAR NA FRENTE
 from kivy.core.window import Window
@@ -311,7 +311,7 @@ class MainApp(MDApp):
         #SETA CAMPOS DA PAGINA
         self.enviar_parametro(pag="pagarpage", id="label_aviso_pago", par="text",
                               dado=f"Pagamentos: {self.user_atual}")
-        self.enviar_parametro(pag="pagarpage", id="lbl_mes_referencia", par="text", dado=f"Registrar em {self.mes_ref}/{self.ano_ref}")
+        self.enviar_parametro(pag="pagarpage", id="lbl_mes_referencia", par="text", dado=f"{self.mes_ref}/{self.ano_ref}")
         self.enviar_parametro(pag="pagarpage", id="input_data", par="text", dado=data_now[0])
         #SETA CAMPO DA URL DE REQUISICAO
         campo = self.mes_ref + "_" + self.ano_ref

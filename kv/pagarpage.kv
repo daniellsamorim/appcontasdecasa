@@ -6,26 +6,35 @@
                 pos: self.pos
 
         #TITULO TELA DE PAGAMENTOS
-        MDLabel:
-            pos_hint: {"right": 0.85, "top": 1}
-            size_hint: 0.7, 0.07
-            text: "Pagamentos: User"
-            font_style: "H4"
-            halign: 'center'
-            valign: 'middle'
-            id: label_aviso_pago
+        MDFloatLayout:
+            pos_hint: {"right": 1, "top": 1}
+            size_hint: 1, 0.08
+            canvas.before:
+                Color:
+                    rgb: utils.get_color_from_hex("#006d7e")
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: 00, 00, 50, 50
+            MDLabel:
+                pos_hint: {"right": 0.9, "top": 0.7}
+                size_hint: 0.8, 0.07
+                text: "Pagamentos: User"
+                font_style: "H5"
+                theme_text_color: "Primary"
+                halign: 'center'
+                valign: 'middle'
+                id: label_aviso_pago
 
-        MDLabel:
-            pos_hint: {"right": 0.85, "top": 0.96}
-            size_hint: 0.7, 0.07
-            text: "Registrar em mes/ano"
-            font_style: "Button"
-            theme_text_color: "Custom"
-            text_color: 1, 0, 0, 1
-            markup: True
-            halign: 'center'
-            valign: 'middle'
-            id: lbl_mes_referencia
+            MDLabel:
+                pos_hint: {"right": 0.9, "top": 0.3}
+                size_hint: 0.8, 0.07
+                text: "mes/ano"
+                font_style: "Button"
+                theme_text_color: "Secondary"
+                halign: 'center'
+                valign: 'middle'
+                id: lbl_mes_referencia
 
         #CAMPO DESCRICAO
         MDGridLayout:
@@ -34,7 +43,7 @@
             size_hint: 0.8, 0.15
             MDTextField:
                 hint_text: "Descrição"
-                mode: "fill"
+                theme_text_color: "Primary"
                 max_text_length: 15
                 id:input_desc
 
