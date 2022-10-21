@@ -19,7 +19,7 @@
             MDLabel:
                 pos_hint: {"right": 0.9, "top": 0.7}
                 size_hint: 0.8, 0.07
-                text: "Pagamentos: User"
+                text: "Despesas: User"
                 font_style: "H5"
                 theme_text_color: "Primary"
                 halign: 'center'
@@ -42,9 +42,9 @@
             pos_hint: {"right": 0.9, "top": 0.90}
             size_hint: 0.8, 0.15
             MDTextField:
-                text_color_normal: "red"
                 hint_text: "Descrição"
                 hint_text_color_normal: "orange"
+                text_color_normal: "red"
                 text_color_focus: "blue"
                 line_color_normal: "orange"
                 max_text_length: 15
@@ -56,12 +56,14 @@
         #CAMPO VALOR
         MDGridLayout:
             rows: 1
-            pos_hint: {"right": 0.9, "top": 0.80}
+            pos_hint: {"right": 0.9, "top": 0.83}
             size_hint: 0.8, 0.1
             MDTextField:
                 hint_text: "Valor"
-                hint_text_color_normal: "red"
-                line_color_normal: "red"
+                hint_text_color_normal: "orange"
+                text_color_normal: "red"
+                text_color_focus: "blue"
+                line_color_normal: "orange"
                 icon_right: "cash-100"
                 icon_right_color_normal: "red"
                 id:input_valor
@@ -69,40 +71,52 @@
         #CAMPO DE DATA
         MDGridLayout:
             rows: 1
-            pos_hint: {"right": 0.9, "top": 0.70}
+            pos_hint: {"right": 0.9, "top": 0.76}
             size_hint: 0.8, 0.1
             MDTextField:
                 hint_text: "Data"
-                hint_text_color_normal: "red"
-                line_color_normal: "red"
+                hint_text_color_normal: "orange"
+                text_color_normal: "red"
+                text_color_focus: "blue"
+                line_color_normal: "orange"
                 icon_right: "calendar"
                 icon_right_color_normal: "red"
                 id:input_data
 
-        #PAINEL CADASTRAR DESPESAS
+        MDLabelButton:
+            text: "Cadastrar como:"
+            font_style: "H5"
+            theme_text_color: "Primary"
+            pos_hint: {"right": .9, "top": 0.65}
+            size_hint: 0.8, 0.1
+            halign: 'center'
+            valign: 'middle'
+
+        #PAINEL BOTOES CADASTRAR
         MDFloatLayout:
-            pos_hint: {"right": 0.9, "top": 0.615}
-            size_hint: 0.8, 0.17
+            pos_hint: {"right": 0.97, "top": 0.57}
+            size_hint: 0.94, 0.17
 
             #BOTAO CADASTRAR DESPESA
             MDRaisedButton:
-                text: "Cadastrar despesa"
+                text: "Despesa"
                 on_release: app.cadastrar_pagamento("pagamento")
-                pos_hint: {"right": 1, "top": 0.95}
-                size_hint: 1, 0.45
+                pos_hint: {"right": 0.49, "top": 0.95}
+                size_hint: 0.46, 0.45
+
             #BOTAO DEVO A
             MDRaisedButton:
                 text: "Devo a User 00"
                 on_release: app.cadastrar_pagamento("devedor")
-                pos_hint: {"right": 1, "top": 0.45}
-                size_hint: 1, 0.45
+                pos_hint: {"right": 0.97, "top": 0.95}
+                size_hint: 0.46, 0.45
                 id: btn_user_credor
 
         #TITULO DE CONTAS FIXAS
         MDLabelButton:
-            text: "[color=#00CFDB]Contas fixas:[/color]"
-            markup: True
-            font_style: "H6"
+            text: "Contas fixas:"
+            font_style: "H5"
+            theme_text_color: "Primary"
             pos_hint: {"right": .9, "top": 0.45}
             size_hint: 0.8, 0.1
             halign: 'center'
@@ -112,7 +126,7 @@
 
         #PAINEL CONTAS FIXAS
         MDFloatLayout:
-            pos_hint: {"right": 0.97, "top": 0.37}
+            pos_hint: {"right": 0.97, "top": 0.35}
             size_hint: 0.94, 0.20
             canvas.before:
                 Color:
@@ -129,12 +143,11 @@
                 size_hint: 0.8, 0.05
                 MDLabel:
                     text: "Aluguel: R$0.00"
-                    text_size: self.size
                     halign: 'left'
                     valign: 'middle'
                     id: lbl_alg_status
 
-                MDRectangleFlatButton:
+                MDRaisedButton:
                     id: btn_alg_status
                     size_hint: 0.7, 0.04
                     text: "Pagar"
@@ -150,12 +163,11 @@
                 size_hint: 0.8, 0.05
                 MDLabel:
                     text: "Cond.: R$0.00"
-                    text_size: self.size
                     halign: 'left'
                     valign: 'middle'
                     id: lbl_cond_status
 
-                MDRectangleFlatButton:
+                MDRaisedButton:
                     id: btn_cond_status
                     size_hint: 0.7, 0.04
                     text: "Pagar"
@@ -170,12 +182,11 @@
                 size_hint: 0.8, 0.05
                 MDLabel:
                     text: "Agua: R$0.00"
-                    text_size: self.size
                     halign: 'left'
                     valign: 'middle'
                     id: lbl_agua_status
 
-                MDRectangleFlatButton:
+                MDRaisedButton:
                     id: btn_agua_status
                     size_hint: 0.7, 0.04
                     text: "Pagar"

@@ -310,14 +310,14 @@ class MainApp(MDApp):
         self.ver_status_contas(self.user_atual)
         #SETA CAMPOS DA PAGINA
         self.enviar_parametro(pag="pagarpage", id="label_aviso_pago", par="text",
-                              dado=f"Pagamentos: {self.user_atual}")
+                              dado=f"Despesas: {self.user_atual}")
         self.enviar_parametro(pag="pagarpage", id="lbl_mes_referencia", par="text", dado=f"{self.mes_ref}/{self.ano_ref}")
         self.enviar_parametro(pag="pagarpage", id="input_data", par="text", dado=data_now[0])
         #SETA CAMPO DA URL DE REQUISICAO
         campo = self.mes_ref + "_" + self.ano_ref
         try:
             #REQUISICAO DB
-            self.enviar_parametro(pag="pagarpage", id="label_aviso", par="text", dado=f"[color=#00CFDB]Contas fixas:[/color] {self.mes_ref}")
+            self.enviar_parametro(pag="pagarpage", id="label_aviso", par="text", dado=f"Contas fixas: {self.mes_ref}")
             requisicao = requests.get(
                 f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}/aluguel/{campo}.json?auth={self.id_token}")
             requisicao_dic = requisicao.json()
@@ -345,7 +345,7 @@ class MainApp(MDApp):
             self.enviar_parametro(pag="pagarpage", id="btn_agua_status", par="disabled", dado=True)
             self.enviar_parametro(pag="pagarpage", id="label_aviso", par="text", dado=f"Cadastre aluguel {self.mes_ref}")
         credor = self.pegar_credor(usuario)
-        self.enviar_parametro(pag="pagarpage", id="btn_user_credor", par="text", dado=f"Cadastrar devo a {credor}")
+        self.enviar_parametro(pag="pagarpage", id="btn_user_credor", par="text", dado=f"Devo a {credor}")
         self.mudar_tela("pagarpage")
 
     def cadastrar_pagamento(self, tipo):
