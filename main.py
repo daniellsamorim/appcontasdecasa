@@ -69,7 +69,11 @@ class MainApp(MDApp):
     def tema(self, tema):
         #TEMA DO KIVY
         self.theme_cls.theme_style = tema  # Dark ou Light
-        self.theme_cls.primary_palette = "Orange"
+        self.theme_cls.primary_palette = "Pink"
+        '''
+        ThemeManager.primary_palette is ['Red', 'Pink', 'Purple', 'DeepPurple', 'Indigo', 'Blue', 'LightBlue', 'Cyan', 
+        'Teal', 'Green', 'LightGreen', 'Lime', 'Yellow', 'Amber', 'Orange', 'DeepOrange', 'Brown', 'Gray', 'BlueGray']
+        '''
         MDScreen()
 
     def carregar_infos_usuario(self):
