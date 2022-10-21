@@ -54,9 +54,25 @@
             text: "Excluir conta"
             on_release: app.mudar_tela("excluirconta")
 
+        #BARRA TEMA
+        MDFloatLayout:
+            pos_hint: {"right": 0.9, "top": 0.20}
+            size_hint: 0.8, 0.050
 
-
-
+            MDLabel:
+                pos_hint: {"right": 1, "top": 0.6}
+                size_hint: 1, 0.050
+                text: "Tema cores claras"
+                halign: 'left'
+                valign: 'middle'
+            MDSwitch:
+                active: False
+                size_hint: None, None
+                size: "48dp", "48dp"
+                pos_hint: {'center_x': .8, 'center_y': .5}
+                id: check_tema
+                on_active: app.tema("Light") if (self.active == True) else app.tema("Dark")
+                   
     #BOTAO SAIR
     MDRaisedButton:
         text: "Sair"

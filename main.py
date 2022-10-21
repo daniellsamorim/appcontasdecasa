@@ -1,13 +1,14 @@
-#set tamanho da tela
+#SETA TAMANHO DA JANELA DO KIVY (COMENTE PARA DEPLOY)
 from kivy.config import Config
 Config.set('graphics', 'width', '340')
 Config.set('graphics', 'height', '680')
 
+#REPOSICIONA TELA PARA O TECLADO ANDROID/IOS NAO PASSAR NA FRENTE
 from kivy.core.window import Window
 Window.keyboard_anim_args = {'d': .2, 't': 'in_out_expo'}
 Window.softinput_mode = "below_target"
 
-# gerenciamento de pastas, arquivos e entradas do teclado
+# GERENCIAMENTO DE ARQUIVOSPASTAS E ENTRADA TECLADO
 from kivy.core.window import Window
 from kivymd.uix.filemanager import MDFileManager
 
@@ -31,9 +32,8 @@ import os
 #CERTIFICADO DB
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
-#ARQUIVO KV
+#ARQUIVO DAS TELAS KV
 doc_main_kv = "main.kv"
-
 
 class MainApp(MDApp):
     dialog = None
@@ -57,7 +57,7 @@ class MainApp(MDApp):
     def build(self):
         self.firebase = MyFirebase()
         self.root = Builder.load_file(doc_main_kv)
-        self.tema()
+        self.tema("Dark")
 
     def on_start(self):
         self.carregar_infos_usuario()
@@ -66,9 +66,9 @@ class MainApp(MDApp):
         self.definir_mes(mes_e_ano[1])
         self.definir_ano(mes_e_ano[2])
 
-    def tema(self):
+    def tema(self, tema):
         #TEMA DO KIVY
-        self.theme_cls.theme_style = "Dark"  # Dark ou Light
+        self.theme_cls.theme_style = tema  # Dark ou Light
         self.theme_cls.primary_palette = "Orange"
         MDScreen()
 
@@ -278,7 +278,7 @@ class MainApp(MDApp):
             else:
                 agua_ative = False
             self.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text",
-                                  dado=f"Cadastro de: {self.mes_ref}/{self.ano_ref}")
+                                  dado=f"[color=#00CFDB]Cadastro de:[/color] {self.mes_ref}/{self.ano_ref}")
             self.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="text", dado=str(aluguel))
             self.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="text", dado=str(cond))
             self.enviar_parametro(pag="aluguelpage", id="preco_agua", par="text", dado=str(agua))
