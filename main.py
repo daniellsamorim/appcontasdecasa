@@ -317,7 +317,7 @@ class MainApp(MDApp):
         campo = self.mes_ref + "_" + self.ano_ref
         try:
             #REQUISICAO DB
-            self.enviar_parametro(pag="pagarpage", id="label_aviso", par="text", dado=f"Contas fixas: {self.mes_ref}")
+            self.enviar_parametro(pag="pagarpage", id="label_aviso", par="text", dado=f"[color=#00CFDB]Contas fixas: {self.mes_ref}[/color]")
             requisicao = requests.get(
                 f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}/aluguel/{campo}.json?auth={self.id_token}")
             requisicao_dic = requisicao.json()

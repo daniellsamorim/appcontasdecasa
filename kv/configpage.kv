@@ -3,13 +3,15 @@
 
         #TITULO DA PÁGINA DE CONFIGURAÇÕES
         MDLabel:
-            theme_text_color: "Primary"
+            md_text_color: app.theme_cls.primary_color
             text: "Configurações"
+            #markup: True #True para ativar a cor acima
             bold: True
             pos_hint: {"right": 0.9, "top": 0.90}
             size_hint: 0.8, 0.08
             halign: 'center'
             valign: 'middle'
+            #id: label_conf
 
         #CADASTRAR USUÁRIOS
         MDRectangleFlatIconButton:
