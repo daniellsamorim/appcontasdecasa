@@ -1,37 +1,36 @@
-from kivy.uix.screenmanager import Screen
-from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import StringProperty
+#from kivy.uix.screenmanager import Screen
+from kivymd.uix.screen import MDScreen
 
 
-class LoginPage(Screen):
+class LoginPage(MDScreen):
     pass
 
-class UsernamePage(Screen):
+class UsernamePage(MDScreen):
     pass
 
-class HomePage(Screen):
+class HomePage(MDScreen):
     pass
 
-class PagarPage(Screen):
+class PagarPage(MDScreen):
     pass
 
-class AluguelPage(Screen):
+class AluguelPage(MDScreen):
     pass
 
-class ScrollPage(Screen):
+class ScrollPage(MDScreen):
     pass
 
-class ConfigPage(Screen):
+class ConfigPage(MDScreen):
     pass
 
-class ExcluirConta(Screen):
+class ExcluirConta(MDScreen):
     pass
 
-class RedefinirSenha(Screen):
+class RedefinirSenha(MDScreen):
     pass
 
-class FotoperfilPage(Screen):
+class FotoperfilPage(MDScreen):
     pass
 
-class RelatorioPage(Screen):
+class RelatorioPage(MDScreen):
     pass
