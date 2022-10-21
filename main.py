@@ -3,6 +3,10 @@ from kivy.config import Config
 Config.set('graphics', 'width', '340')
 Config.set('graphics', 'height', '680')
 
+from kivy.core.window import Window
+Window.keyboard_anim_args = {'d': .2, 't': 'in_out_expo'}
+Window.softinput_mode = "below_target"
+
 # gerenciamento de pastas, arquivos e entradas do teclado
 from kivy.core.window import Window
 from kivymd.uix.filemanager import MDFileManager
