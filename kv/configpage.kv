@@ -62,7 +62,8 @@
             MDLabel:
                 pos_hint: {"right": 1, "top": 0.6}
                 size_hint: 1, 0.050
-                text: "Tema cores claras"
+                text: "[color=#F69C09]Mudar tema cores claras[/color]"
+                markup: True
                 halign: 'left'
                 valign: 'middle'
             MDSwitch:
@@ -72,7 +73,7 @@
                 pos_hint: {'center_x': .8, 'center_y': .5}
                 id: check_tema
                 on_active: app.tema("Light") if (self.active == True) else app.tema("Dark")
-                   
+
     #BOTAO SAIR
     MDRaisedButton:
         text: "Sair"
