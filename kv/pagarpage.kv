@@ -1,6 +1,6 @@
 <PagarPage>:
     MDFloatLayout:
-        
+
         #TITULO TELA DE PAGAMENTOS
         MDFloatLayout:
             pos_hint: {"right": 1, "top": 1}
@@ -75,6 +75,7 @@
                 icon_right_color_normal: "red"
                 id:input_data
 
+        #TITULO PAINEL BOTOES CADASTRAR
         MDLabel:
             pos_hint: {"right": .9, "top": 0.65}
             size_hint: 0.8, 0.1
@@ -119,13 +120,8 @@
         MDFloatLayout:
             pos_hint: {"right": 0.97, "top": 0.35}
             size_hint: 0.94, 0.20
-            canvas.before:
-                Color:
-                    rgb: utils.get_color_from_hex("#006d7e")
-                RoundedRectangle:
-                    size: self.size
-                    pos: self.pos
-                    radius: 70, 00, 70, 00
+            radius: [70, 0, 70, 0]
+            md_bg_color: app.theme_cls.primary_color
 
             #CAMPO DE ALUGUEL
             MDGridLayout:

@@ -1,14 +1,9 @@
 <ConfigPage>:
-    FloatLayout:
-        canvas:
-            Rectangle:
-                size: self.size
-                pos: self.pos
-                source: "icones/bg1.png"
+    MDFloatLayout:
 
         #TITULO DA PÁGINA DE CONFIGURAÇÕES
         MDLabel:
-            text: "[color=#00CFDB]Configurações[/color]"
+            text: "Configurações"
             markup: True #True para ativar a cor acima
             bold: True
             pos_hint: {"right": 0.9, "top": 0.90}
@@ -72,7 +67,7 @@
                 size: "48dp", "48dp"
                 pos_hint: {'center_x': .8, 'center_y': .5}
                 id: check_tema
-                on_active: app.tema("Light", "BlueGray") if (self.active == True) else app.tema("Dark", "Orange")
+                on_active: app.tema("Light", "Green") if (self.active == True) else app.tema("Dark", "Orange")
 
     #BOTAO SAIR
     MDRaisedButton:
