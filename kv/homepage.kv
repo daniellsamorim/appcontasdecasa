@@ -27,6 +27,7 @@
                 pos_hint: {"center_x": .25, "center_y": .25}
                 size_hint: 0.4, 0.06
                 id: btn_mes
+                md_bg_color: app.theme_cls.primary_color
 
             MDRaisedButton:
                 text: "Ano"
@@ -34,6 +35,7 @@
                 pos_hint: {"center_x": .75, "center_y": .25}
                 size_hint: 0.4, 0.06
                 id: btn_ano
+                md_bg_color: app.theme_cls.primary_color
 
         MDFloatLayout:
             pos_hint: {"right": 1, "top": 0.7}
@@ -80,3 +82,4 @@
             on_release: app.abrir_lista_opcoes("menu_telas")
             pos_hint: {"center_x": .5, "center_y": .05}
             size_hint: 1, 0.10
+            md_bg_color: app.theme_cls.primary_color

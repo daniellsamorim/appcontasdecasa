@@ -445,7 +445,7 @@ class MainApp(MDApp):
         self.limpar_banner()
         self.enviar_parametro(pag="scrollpage", id="code_input", par="text", dado="")
         # PREENCHE TITULO DA PAGINA DE PAGAMENTOS
-        self.enviar_parametro(pag="scrollpage", id="pgmt_user", par="text", dado=f"[color=#00CFDB]Relatório de:[/color] {args[0]}")
+        self.enviar_parametro(pag="scrollpage", id="pgmt_user", par="text", dado=f"[color=#00CFDB]Relatório de: {args[0]}[/color]")
         self.enviar_parametro(pag="scrollpage", id="pgmt_mes", par="text", dado=f"{args[1]}/{args[2]}")
         # REQUISCAO NO BD
         cod_user = self.pegar_cod_ou_credor(args[0])[0]

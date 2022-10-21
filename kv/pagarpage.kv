@@ -77,7 +77,7 @@
 
         #TITULO PAINEL BOTOES CADASTRAR
         MDLabel:
-            pos_hint: {"right": .9, "top": 0.65}
+            pos_hint: {"right": .9, "top": 0.62}
             size_hint: 0.8, 0.1
             text: "[color=#00CFDB]Cadastrar como:[/color]"
             markup: True
@@ -96,6 +96,7 @@
                 on_release: app.cadastrar_pagamento("pagamento")
                 pos_hint: {"right": 0.49, "top": 0.95}
                 size_hint: 0.46, 0.45
+                md_bg_color: app.theme_cls.primary_color
 
             #BOTAO DEVO A
             MDRaisedButton:
@@ -104,10 +105,11 @@
                 pos_hint: {"right": 0.97, "top": 0.95}
                 size_hint: 0.46, 0.45
                 id: btn_user_credor
+                md_bg_color: app.theme_cls.primary_color
 
         #TITULO DE CONTAS FIXAS
         MDLabel:
-            pos_hint: {"right": .9, "top": 0.45}
+            pos_hint: {"right": .9, "top": 0.42}
             size_hint: 0.8, 0.1
             text: "[color=#00CFDB]Contas fixas:[/color]"
             markup: True
