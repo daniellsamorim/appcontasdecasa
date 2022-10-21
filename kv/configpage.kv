@@ -72,7 +72,7 @@
                 size: "48dp", "48dp"
                 pos_hint: {'center_x': .8, 'center_y': .5}
                 id: check_tema
-                on_active: app.tema("Light") if (self.active == True) else app.tema("Dark")
+                on_active: app.tema("Light", "BlueGray") if (self.active == True) else app.tema("Dark", "Orange")
 
     #BOTAO SAIR
     MDRaisedButton:

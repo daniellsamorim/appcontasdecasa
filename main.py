@@ -57,7 +57,7 @@ class MainApp(MDApp):
     def build(self):
         self.firebase = MyFirebase()
         self.root = Builder.load_file(doc_main_kv)
-        self.tema("Dark")
+        self.tema("Dark", "Orange")
 
     def on_start(self):
         self.carregar_infos_usuario()
@@ -66,10 +66,10 @@ class MainApp(MDApp):
         self.definir_mes(mes_e_ano[1])
         self.definir_ano(mes_e_ano[2])
 
-    def tema(self, tema):
+    def tema(self, tema, botoes):
         #TEMA DO KIVY
         self.theme_cls.theme_style = tema  # Dark ou Light
-        self.theme_cls.primary_palette = "BlueGray"
+        self.theme_cls.primary_palette = botoes
         '''
         ThemeManager.primary_palette is ['Red', 'Pink', 'Purple', 'DeepPurple', 'Indigo', 'Blue', 'LightBlue', 'Cyan', 
         'Teal', 'Green', 'LightGreen', 'Lime', 'Yellow', 'Amber', 'Orange', 'DeepOrange', 'Brown', 'Gray', 'BlueGray']
