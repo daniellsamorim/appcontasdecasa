@@ -310,8 +310,8 @@ class MainApp(MDApp):
         self.ver_status_contas(self.user_atual)
         #SETA CAMPOS DA PAGINA
         self.enviar_parametro(pag="pagarpage", id="label_aviso_pago", par="text",
-                              dado=f"Despesas: {self.user_atual}")
-        self.enviar_parametro(pag="pagarpage", id="lbl_mes_referencia", par="text", dado=f"{self.mes_ref}/{self.ano_ref}")
+                              dado=f"[color=#000000]Despesas: {self.user_atual}[/color]")
+        self.enviar_parametro(pag="pagarpage", id="lbl_mes_referencia", par="text", dado=f"[color=#000000]{self.mes_ref}/{self.ano_ref}[/color]")
         self.enviar_parametro(pag="pagarpage", id="input_data", par="text", dado=data_now[0])
         #SETA CAMPO DA URL DE REQUISICAO
         campo = self.mes_ref + "_" + self.ano_ref
