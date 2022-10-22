@@ -282,7 +282,7 @@ class MainApp(MDApp):
             else:
                 agua_ative = False
             self.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text",
-                                  dado=f"[color=#00CFDB]Cadastro de:[/color] {self.mes_ref}/{self.ano_ref}")
+                                  dado=f"[color=#000000]Cadastro de: {self.mes_ref}/{self.ano_ref}[/color]")
             self.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="text", dado=str(aluguel))
             self.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="text", dado=str(cond))
             self.enviar_parametro(pag="aluguelpage", id="preco_agua", par="text", dado=str(agua))
@@ -291,8 +291,7 @@ class MainApp(MDApp):
             #IR PARA PAGINA ALUGUELPAGE
             self.mudar_tela("aluguelpage")
         except Exception as ex:
-            self.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text",
-                                  dado=f"Cadastro mes de: {self.mes_ref}")
+            self.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text", dado=f"[color=#000000]Cadastro mes de: {self.mes_ref}[/color]")
             self.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="hint_text", dado="Aluguel")
             self.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="hint_text", dado="Condominio")
             self.enviar_parametro(pag="aluguelpage", id="preco_agua", par="hint_text", dado="Agua")
@@ -445,8 +444,8 @@ class MainApp(MDApp):
         self.limpar_banner()
         self.enviar_parametro(pag="scrollpage", id="code_input", par="text", dado="")
         # PREENCHE TITULO DA PAGINA DE PAGAMENTOS
-        self.enviar_parametro(pag="scrollpage", id="pgmt_user", par="text", dado=f"[color=#00CFDB]Relatório de: {args[0]}[/color]")
-        self.enviar_parametro(pag="scrollpage", id="pgmt_mes", par="text", dado=f"{args[1]}/{args[2]}")
+        self.enviar_parametro(pag="scrollpage", id="pgmt_user", par="text", dado=f"[color=#000000]Relatório de: {args[0]}[/color]")
+        self.enviar_parametro(pag="scrollpage", id="pgmt_mes", par="text", dado=f"[color=#000000]{args[1]}/{args[2]}[/color]")
         # REQUISCAO NO BD
         cod_user = self.pegar_cod_ou_credor(args[0])[0]
         campo = cod_user + "_" + args[1] + "_" + args[2]
@@ -460,7 +459,7 @@ class MainApp(MDApp):
             soma = "0"
         else:
             soma = "{:.2f}".format(soma)
-        self.enviar_parametro(pag="scrollpage", id="lbl_soma_pgm", par="text", dado=f"Total despesas casa: R${soma}")
+        self.enviar_parametro(pag="scrollpage", id="lbl_soma_pgm", par="text", dado=f"[color=#00CFDB]Total despesas casa: R${soma}[/color]")
 
         #SOMA TODAS AS DIVIDAS DA LISTA
         requisicao = requests.get(
@@ -472,7 +471,7 @@ class MainApp(MDApp):
             soma = "0"
         else:
             soma = "{:.2f}".format(soma)
-        self.enviar_parametro(pag="scrollpage", id="lbl_soma_div", par="text", dado=f"Total devo a {args[3]}: R${soma}")
+        self.enviar_parametro(pag="scrollpage", id="lbl_soma_div", par="text", dado=f"[color=#00CFDB]Total devo a {args[3]}: R${soma}[/color]")
         #IR PARA TELA DE PAGAMENTOS
         self.mudar_tela("scrollpage")
 
@@ -523,7 +522,7 @@ class MainApp(MDApp):
         cod_userx = self.pegar_cod_ou_credor(args[0])[0]
         cod_usery = self.pegar_cod_ou_credor(args[1])[0]
 
-        self.enviar_parametro(pag="relatoriopage", id="relat_mes", par="text", dado=f"[color=#FF0000]{self.mes_ref}/{self.ano_ref}[/color]")
+        self.enviar_parametro(pag="relatoriopage", id="relat_mes", par="text", dado=f"[color=#000000]{self.mes_ref}/{self.ano_ref}[/color]")
         self.enviar_parametro(pag="relatoriopage", id="lbl_rel_user1", par="text", dado=f"Relatório de {args[0]}:")
         self.enviar_parametro(pag="relatoriopage", id="lbl_rel_user2", par="text", dado=f"Relatório de {args[1]}:")
 

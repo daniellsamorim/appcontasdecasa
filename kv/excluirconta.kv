@@ -1,11 +1,20 @@
 <ExcluirConta>
     FloatLayout:
 
-        canvas:
-            Rectangle:
-                size: self.size
-                pos: self.pos
-                source: "icones/bg1.png"
+        MDFloatLayout:
+            pos_hint: {"right": 1, "top": 1}
+            size_hint: 1, 0.08
+            radius: [0, 0, 70, 70]
+            md_bg_color: app.theme_cls.primary_color
+
+            MDLabel:
+                pos_hint: {"right": 0.9, "top": 0.5}
+                size_hint: 0.8, 0.07
+                text: "[color=#00CFDB]Configurações[/color]"
+                markup: True
+                font_style: "H5"
+                halign: 'center'
+                valign: 'middle'
 
         #TITULO PAGINA LOGIN
         MDLabel:
@@ -21,19 +30,29 @@
         #CAMPOS DE INPUT DE EMAIL E SENHA
         MDTextField:
             hint_text: "Email"
-            helper_text: "Digite seu email"
-            helper_text_mode: "on_focus"
+            hint_text_color_normal: "orange"
+            text_color_normal: "red"
+            text_color_focus: "blue"
+            line_color_normal: "orange"
+            max_text_length: 15
+            icon_right: "draw-pen"
+            icon_right_color_normal: "red"
             pos_hint: {"center_x": 0.5, "center_y": 0.70}
-            size_hint: 0.9, 0.10
+            size_hint: 0.8, 0.10
             id: email_excluir
 
         MDTextField:
             hint_text: "Senha"
-            helper_text: "Digite sua senha"
-            helper_text_mode: "on_focus"
+            hint_text_color_normal: "orange"
+            text_color_normal: "red"
+            text_color_focus: "blue"
+            line_color_normal: "orange"
+            max_text_length: 15
+            icon_right: "draw-pen"
+            icon_right_color_normal: "red"
             password: True
             pos_hint: {"center_x": 0.5, "center_y": 0.60}
-            size_hint: 0.9, 0.10
+            size_hint: 0.8, 0.10
             id: senha_excluir
 
 
