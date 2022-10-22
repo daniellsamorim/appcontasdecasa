@@ -76,7 +76,7 @@
 
         #TITULO PAINEL BOTOES CADASTRAR
         MDLabel:
-            pos_hint: {"right": .9, "top": 0.64}
+            pos_hint: {"right": .9, "top": 0.7}
             size_hint: 0.8, 0.1
             text: "[color=#00CFDB]Cadastrar como:[/color]"
             markup: True
@@ -86,7 +86,7 @@
 
         #PAINEL BOTOES CADASTRAR
         MDFloatLayout:
-            pos_hint: {"right": 1, "top": 0.57}
+            pos_hint: {"right": 1, "top": 0.63}
             size_hint: 1, 0.17
 
             #BOTAO CADASTRAR DESPESA
@@ -108,7 +108,7 @@
 
         #TITULO DE CONTAS FIXAS
         MDLabel:
-            pos_hint: {"right": .9, "top": 0.43}
+            pos_hint: {"right": .9, "top": 0.53}
             size_hint: 0.8, 0.1
             text: "[color=#00CFDB]Contas fixas:[/color]"
             markup: True
@@ -119,7 +119,7 @@
 
         #PAINEL CONTAS FIXAS
         MDFloatLayout:
-            pos_hint: {"right": 0.90, "top": 0.35}
+            pos_hint: {"right": 0.90, "top": 0.45}
             size_hint: 0.8, 0.20
             radius: [70, 0, 70, 0]
             md_bg_color: utils.get_color_from_hex("#006d7e")
@@ -182,7 +182,26 @@
                     on_release: app.pagar_conta_fixa("agua", lbl_agua_status.text)
                     id: btn_agua_status
 
+        #PAINEL BOTOES OUTRAS TELAS
+        MDFloatLayout:
+            pos_hint: {"right": 1, "top": 0.22}
+            size_hint: 1, 0.17
 
+            #BOTAO CADASTRAR DESPESA
+            MDRaisedButton:
+                text: "Cadastrar contas fixas"
+                on_release: app.ver_aluguel()
+                pos_hint: {"right": 0.49, "top": 0.95}
+                size_hint: 0.4, 0.45
+                md_bg_color: app.theme_cls.primary_color
+
+            #BOTAO DEVO A
+            MDRaisedButton:
+                text: "Ver minhas despesas"
+                on_release: app.acoes_user("Ver minhas despesas")
+                pos_hint: {"right": 0.9, "top": 0.95}
+                size_hint: 0.39, 0.45
+                md_bg_color: app.theme_cls.primary_color
 
 
         #BOTAO CANCELAR
