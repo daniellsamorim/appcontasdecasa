@@ -10,7 +10,7 @@
             MDLabel:
                 pos_hint: {"right": 0.9, "top": 0.5}
                 size_hint: 0.8, 0.07
-                text: "[color=#00CFDB]Configurações[/color]"
+                text: "[color=#000000]Configurações[/color]"
                 markup: True
                 font_style: "H5"
                 halign: 'center'
@@ -20,7 +20,7 @@
         MDLabel:
             #markup True permitiu editar o texto em 2 cores (duvida google markup)
             text: "[color=#00CFDB]Excluir conta[/color]"
-            text_style: "Button"
+            font_style: "H5"
             bold: True
             markup: True
             pos_hint: {"right": 0.9, "top": 0.90}
@@ -58,7 +58,7 @@
 
         MDLabel:
             id: mensagem_excluir
-            text: "[color=#FF0000]Atenção![/color] Sua conta e todas suas informações serão excluidas."
+            text: "[color=#FF0000]Atenção! Sua conta e todas suas informações serão excluidas.[/color]"
             text_size: self.size
             markup: True
             halign: 'center'
