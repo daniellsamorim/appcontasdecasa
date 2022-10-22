@@ -67,13 +67,17 @@
             size_hint: 0.8, 0.1
 
         #BOTOES CANCELAR E EXCLUIR CONTA
-        MDRectangleFlatButton:
-            on_release: app.mudar_tela("configpage")
-            text: "Cancelar"
-            pos_hint: {"right": 0.45, "top": 0.4}
-            size_hint: 0.4, 0.05
+
         MDRectangleFlatButton:
             on_release: app.firebase.excluir_conta(email_excluir.text, senha_excluir.text)
             text: "Excluir conta"
-            pos_hint: {"right": 0.95, "top": 0.4}
-            size_hint: 0.4, 0.05
+            pos_hint: {'center_x': .50, 'center_y': .37}
+            size_hint: .3, .05
+
+
+        MDRaisedButton:
+            text: "Cancelar"
+            on_release: app.mudar_tela("configpage")
+            pos_hint: {"center_x": .5, "center_y": .05}
+            size_hint: 1, 0.10
+            md_bg_color: app.theme_cls.primary_color

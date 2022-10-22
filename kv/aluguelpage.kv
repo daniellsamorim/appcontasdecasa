@@ -81,10 +81,10 @@
                 valign: 'middle'
             MDSwitch:
                 active: False
-                size_hint: None, None
                 size: "48dp", "48dp"
-                pos_hint: {"right": 0.9, "top": 0.7}
-                size_hint: 0.15, 0.050
+                #OBS: MDSwitch so aceita posicionamento no formato abaixo ou da bug no switch
+                pos_hint: {'center_x': .8, 'center_y': .7}
+                size_hint: None, None
                 id: check_cond
 
             MDLabel:
@@ -95,10 +95,9 @@
                 valign: 'middle'
             MDSwitch:
                 active: False
-                size_hint: None, None
                 size: "48dp", "48dp"
-                pos_hint: {"right": 0.9, "top": 0.35}
-                size_hint: 0.15, 0.050
+                pos_hint: {'center_x': .8, 'center_y': .35}
+                size_hint: None, None
                 id: check_agua
 
         #BOTAO CONFIRMAR E SALVAR
@@ -106,7 +105,7 @@
             text: "Confirmar e salvar"
             pos_hint: {"right": 0.90, "top": 0.48}
             size_hint: 0.8, 0.08
-            on_release: app.calcular_pag_aluguel()
+            on_release: app.calcular_resumo_cf()
             md_bg_color: app.theme_cls.primary_color
 
         #TITULO DE CONTAS FIXAS

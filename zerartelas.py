@@ -40,3 +40,17 @@ class ZerarTelas():
         app.enviar_parametro(pag="pagarpage", id="lbl_alg_status", par="text", dado=f"Aluguel: R$0")
         app.enviar_parametro(pag="pagarpage", id="lbl_cond_status", par="text", dado=f"Cond.: R$0")
         app.enviar_parametro(pag="pagarpage", id="lbl_agua_status", par="text", dado=f"Agua: R$0")
+
+    def zerar_contasfixas(self):
+        app = MDApp.get_running_app()
+        app.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text",
+                              dado=f"[color=#000000]Cadastro mes de: {app.mes_ref}[/color]")
+        app.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="text", dado="Aluguel")
+        app.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="text", dado="Condominio")
+        app.enviar_parametro(pag="aluguelpage", id="preco_agua", par="text", dado="Agua")
+        app.enviar_parametro(pag="aluguelpage", id="check_cond", par="active", dado= False)
+        app.enviar_parametro(pag="aluguelpage", id="check_agua", par="active", dado= False)
+        #SETA RESUMO CONTAS FIXAS
+        app.enviar_parametro(pag="aluguelpage", id="label_aluguel", par="text", dado="")
+        app.enviar_parametro(pag="aluguelpage", id="label_cond", par="text", dado="Confirme para calcular resumo!")
+        app.enviar_parametro(pag="aluguelpage", id="label_agua", par="text", dado="")

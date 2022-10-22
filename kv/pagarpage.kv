@@ -86,29 +86,29 @@
 
         #PAINEL BOTOES CADASTRAR
         MDFloatLayout:
-            pos_hint: {"right": 0.97, "top": 0.57}
-            size_hint: 0.94, 0.17
+            pos_hint: {"right": 1, "top": 0.57}
+            size_hint: 1, 0.17
 
             #BOTAO CADASTRAR DESPESA
             MDRaisedButton:
                 text: "Despesa"
                 on_release: app.cadastrar_pagamento("pagamento")
                 pos_hint: {"right": 0.49, "top": 0.95}
-                size_hint: 0.46, 0.45
+                size_hint: 0.4, 0.45
                 md_bg_color: app.theme_cls.primary_color
 
             #BOTAO DEVO A
             MDRaisedButton:
                 text: "Devo a User 00"
                 on_release: app.cadastrar_pagamento("devedor")
-                pos_hint: {"right": 0.97, "top": 0.95}
-                size_hint: 0.46, 0.45
+                pos_hint: {"right": 0.9, "top": 0.95}
+                size_hint: 0.39, 0.45
                 id: btn_user_credor
                 md_bg_color: app.theme_cls.primary_color
 
         #TITULO DE CONTAS FIXAS
         MDLabel:
-            pos_hint: {"right": .9, "top": 0.42}
+            pos_hint: {"right": .9, "top": 0.43}
             size_hint: 0.8, 0.1
             text: "[color=#00CFDB]Contas fixas:[/color]"
             markup: True
@@ -119,8 +119,8 @@
 
         #PAINEL CONTAS FIXAS
         MDFloatLayout:
-            pos_hint: {"right": 0.97, "top": 0.35}
-            size_hint: 0.94, 0.20
+            pos_hint: {"right": 0.90, "top": 0.35}
+            size_hint: 0.8, 0.20
             radius: [70, 0, 70, 0]
             md_bg_color: utils.get_color_from_hex("#006d7e")
 

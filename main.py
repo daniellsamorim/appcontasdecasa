@@ -197,10 +197,11 @@ class MainApp(MDApp):
             credor = self.nome_user1
         return credor
 
-    def calcular_pag_aluguel(self):
+    def calcular_resumo_cf(self):
         try:
             # PEGA OS CAMPOS SETADOS PELO USUÁRIO
             pagina_aluguel = self.root.ids["aluguelpage"]
+
             aluguel_vl = pagina_aluguel.ids["preco_aluguel"].text.replace(",", ".")
             condominio_vl = pagina_aluguel.ids["preco_condominio"].text.replace(",", ".")
             agua_vl = pagina_aluguel.ids["preco_agua"].text.replace(",", ".")
@@ -211,39 +212,37 @@ class MainApp(MDApp):
             condominio = float(condominio_vl)
             agua = float(agua_vl)
 
-            # float(aluguel)
-            # float(condominio)
-            # float(agua)
-
             if aluguel != "" and condominio != "" and agua != "":
                 if cond_inclusa or agua_inclusa:
                     if cond_inclusa and not agua_inclusa:
-                        pagina_aluguel.ids["label_aluguel"].text = f"Aluguel a pagar: R$ {aluguel}"
+                        pagina_aluguel.ids["label_aluguel"].text = f"Aluguel a pagar: R$ {aluguel:.2f}"
                         pagina_aluguel.ids[
-                            "label_cond"].text = f"(Valor real aluguel: R$ {float(aluguel) - float(condominio)})"
-                        pagina_aluguel.ids["label_agua"].text = f"Água a pagar: R$ {agua}"
+                            "label_cond"].text = f"(Valor real aluguel: R$ {float(aluguel) - float(condominio):.2f})"
+                        pagina_aluguel.ids["label_agua"].text = f"Água a pagar: R$ {agua:.2f}"
                         condominio = 0
                     if agua_inclusa:
                         if cond_inclusa:
+                            pagina_aluguel.ids["label_aluguel"].text = f"Aluguel a pagar: R$ {aluguel:.2f}"
                             pagina_aluguel.ids["label_cond"].text = f"Agua e condominio incluso"
-                            pagina_aluguel.ids["label_agua"].text = f"(Valor real aluguel: R$ {float(aluguel) - float(condominio) - float(agua)})"
+                            pagina_aluguel.ids["label_agua"].text = f"(Valor real aluguel: R$ {float(aluguel) - float(condominio) - float(agua):.2f})"
                             agua = 0
                             condominio = 0
                         else:
-                            pagina_aluguel.ids["label_aluguel"].text = f"Aluguel a pagar: R$ {aluguel}"
-                            pagina_aluguel.ids["label_cond"].text = f"Condominio a pagar: R$ {condominio}"
+                            pagina_aluguel.ids["label_aluguel"].text = f"Aluguel a pagar: R$ {aluguel:.2f}"
+                            pagina_aluguel.ids["label_cond"].text = f"Condominio a pagar: R$ {condominio:.2f}"
                             pagina_aluguel.ids[
-                                "label_agua"].text = f"(Valor real aluguel: R$ {float(aluguel) - float(agua)})"
+                                "label_agua"].text = f"(Valor real aluguel: R$ {float(aluguel) - float(agua):.2f})"
                             agua = 0
                 else:
-                    pagina_aluguel.ids["label_aluguel"].text = f"Aluguel a pagar: R$ {aluguel}"
-                    pagina_aluguel.ids["label_cond"].text = f"Condominio a pagar: R$ {condominio}"
-                    pagina_aluguel.ids["label_agua"].text = f"Água a pagar: R$ {agua}"
+                    pagina_aluguel.ids["label_aluguel"].text = f"Aluguel a pagar: R$ {aluguel:.2f}"
+                    pagina_aluguel.ids["label_cond"].text = f"Condominio a pagar: R$ {condominio:.2f}"
+                    pagina_aluguel.ids["label_agua"].text = f"Água a pagar: R$ {agua:.2f}"
+                self.gravar_pag_aluguel(aluguel_vl, condominio_vl, agua_vl, aluguel, condominio, agua)
             else:
                 toast("Cadastre todos os valores!")
         except Exception as ex:
             toast("Cadastre todos os valores!")
-        self.gravar_pag_aluguel(aluguel_vl, condominio_vl, agua_vl, aluguel, condominio, agua)
+
 
     def gravar_pag_aluguel(self, *args):
         #CAMPO PARA URL DB
@@ -259,9 +258,11 @@ class MainApp(MDApp):
         requests.patch(link, data=info)
 
     def ver_aluguel(self):
+        ZerarTelas.zerar_contasfixas(self)
         campo = self.mes_ref + "_" + self.ano_ref
-        print(campo)
+
         try:
+
             #REQUISICAO DE VALORES DAS CONTAS FIXAS NO DB
             requisicao = requests.get(f"https://appcontascasa-d1359-default-rtdb.firebaseio.com/{self.local_id}/aluguel/"
                                       f"{campo}.json?auth={self.id_token}")
@@ -273,6 +274,11 @@ class MainApp(MDApp):
             check_cond = requisicao_dic["check_cond"]
             check_agua = requisicao_dic["check_agua"]
 
+            aluguel = float(aluguel)
+            cond = float(cond)
+            agua = float(agua)
+
+
             if check_cond == "True":
                 cond_ative = True
             else:
@@ -281,21 +287,18 @@ class MainApp(MDApp):
                 agua_ative = True
             else:
                 agua_ative = False
+
             self.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text",
                                   dado=f"[color=#000000]Cadastro de: {self.mes_ref}/{self.ano_ref}[/color]")
-            self.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="text", dado=str(aluguel))
-            self.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="text", dado=str(cond))
-            self.enviar_parametro(pag="aluguelpage", id="preco_agua", par="text", dado=str(agua))
-            self.enviar_parametro(pag="aluguelpage", id="check_cond", par="active", dado=cond_ative)
+            self.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="text", dado=str(f"{aluguel:.2f}"))
+            self.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="text", dado=str(f"{cond:.2f}"))
+            self.enviar_parametro(pag="aluguelpage", id="preco_agua", par="text", dado=str(f"{agua:.2f}"))
             self.enviar_parametro(pag="aluguelpage", id="check_agua", par="active", dado=agua_ative)
+            self.enviar_parametro(pag="aluguelpage", id="check_cond", par="active", dado=cond_ative)
+
             #IR PARA PAGINA ALUGUELPAGE
             self.mudar_tela("aluguelpage")
         except Exception as ex:
-            self.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text", dado=f"[color=#000000]Cadastro mes de: {self.mes_ref}[/color]")
-            self.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="hint_text", dado="Aluguel")
-            self.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="hint_text", dado="Condominio")
-            self.enviar_parametro(pag="aluguelpage", id="preco_agua", par="hint_text", dado="Agua")
-
             self.mudar_tela("aluguelpage")
 
     def pagar_conta(self, usuario):
