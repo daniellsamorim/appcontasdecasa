@@ -45,6 +45,9 @@ class ZerarTelas():
         app = MDApp.get_running_app()
         app.enviar_parametro(pag="aluguelpage", id="label_aviso_aluguel", par="text",
                               dado=f"[color=#000000]Cadastro mes de: {app.mes_ref}[/color]")
+        app.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="text", dado="")
+        app.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="text", dado="")
+        app.enviar_parametro(pag="aluguelpage", id="preco_agua", par="text", dado="")
         app.enviar_parametro(pag="aluguelpage", id="preco_aluguel", par="hint_text", dado="Aluguel")
         app.enviar_parametro(pag="aluguelpage", id="preco_condominio", par="hint_text", dado="Condominio")
         app.enviar_parametro(pag="aluguelpage", id="preco_agua", par="hint_text", dado="Agua")

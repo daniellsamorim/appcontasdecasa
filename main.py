@@ -300,6 +300,7 @@ class MainApp(MDApp):
             self.mudar_tela("aluguelpage")
         except Exception as ex:
             self.mudar_tela("aluguelpage")
+            print(ex)
 
     def pagar_conta(self, usuario):
         #RESET CAMPOS DE PAGARPAGE
