@@ -428,8 +428,7 @@ class MainApp(MDApp):
                     self.preencher_banner(self.user_atual, self.mes_ref, self.ano_ref, credor)
                     self.enviar_parametro(pag="scrollpage", id="code_input", par="text", dado="")
                     break
-                else:
-                    toast("Código não encontrado na lista!")
+
         else:
             toast("Digite um código para excluir da lista!")
 
